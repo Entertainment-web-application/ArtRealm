@@ -4,14 +4,14 @@ import { addPost } from "../actions/postActions";
 
 const AddPost = ({ addPost }) => {
   const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title && body) {
-      addPost({ title, body });
+    if (title && description) {
+      addPost({ title, description });
       setTitle("");
-      setBody("");
+      setDescription("");
     }
   };
 
@@ -31,8 +31,8 @@ const AddPost = ({ addPost }) => {
         <div className="mb-4">
           <label className="block font-medium">Body:</label>
           <textarea
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
           />
         </div>

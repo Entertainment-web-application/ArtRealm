@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchPosts, deletePost } from "../actions/postActions";
+import { fetchPosts, deletePost, editPost } from "../actions/postActions";
 import Comments from "./Comments";
+// import { post } from "../../../back-end/routes/posts";
 
 const Posts = ({ posts, fetchPosts, deletePost }) => {
   useEffect(() => {
@@ -11,13 +12,12 @@ const Posts = ({ posts, fetchPosts, deletePost }) => {
   const handleDelete = (postId) => {
     deletePost(postId);
   };
-
   return (
     <div className="my-4">
       {posts.map((post) => (
         <div key={post.id} className="mb-4 p-4 border rounded border-gray-300">
           <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-          <p className="mb-4">{post.body}</p>
+          <p className="mb-4">{post.description}</p>
           <button
             onClick={() => handleDelete(post.id)}
             className="px-4 py-2 bg-red-500 text-white rounded"

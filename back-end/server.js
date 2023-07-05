@@ -17,5 +17,7 @@ pool
 app.use(cors());
 app.use(express.json());
 app.use("/images", express.static("images"));
+app.use("/post", require("./routes/posts"));
 app.use('/users' , userRoutes)  
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
