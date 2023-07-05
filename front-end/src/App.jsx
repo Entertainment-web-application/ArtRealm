@@ -8,6 +8,7 @@ import Blog from "./Pages/Blogs";
 import ProfilePage from "./Pages/ProfilePage";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
+
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
