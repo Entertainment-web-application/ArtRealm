@@ -40,7 +40,7 @@ const Comments = ({
   return (
     <div className="my-4">
       <h4 className="text-lg font-bold mb-2">Comments</h4>
-      {comments.map((comment) => (
+      {comments?.map((comment) => (
         <div key={comment.id} className="mb-4">
           <div className="flex items-center mb-2">
             <img
