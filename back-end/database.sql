@@ -4,7 +4,9 @@ CREATE TABLE post (
   title VARCHAR(255),
   description TEXT,
   likes INT,
-  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  isDeleted BOOLEAN,
+  isApproved BOOLEAN
 );
 
 
@@ -13,6 +15,7 @@ CREATE TABLE comments (
   post_id INT,
   user_id INT,
   comment TEXT,
+  isDeleted BOOLEAN,
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (post_id) REFERENCES post (post_id)
 );

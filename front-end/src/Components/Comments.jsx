@@ -1,46 +1,55 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addComment, deleteComment, editComment } from "../actions/postActions";
-
-const Comments = ({
-  postId,
-  comments,
+import {
   addComment,
   deleteComment,
   editComment,
+  fetchComments,
+} from "../actions/postActions";
+
+const Comments = ({
+  comments,
+  postId,
+  addComment,
+  editComment,
+  fetchComments,
+  deleteComment,
 }) => {
-  const [commentText, setCommentText] = useState("");
+  const [comment, setComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
+  useEffect(() => {
+    fetchComments(postId);
+  }, [postId]);
 
   const handleAddComment = () => {
-    if (commentText) {
-      addComment(postId, { text: commentText });
-      setCommentText("");
+    if (comment) {
+      addComment(postId, { comment: comment });
+      setComment("");
     }
   };
-
+  console.log(comment);
   const handleDeleteComment = (commentId) => {
     deleteComment(postId, commentId);
   };
 
-  const handleEditComment = (commentId, commentText) => {
+  const handleEditComment = (commentId, comment) => {
     setEditCommentId(commentId);
-    setEditCommentText(commentText);
+    setEditCommentText(comment);
   };
 
   const handleSaveComment = () => {
     if (editCommentId && editCommentText) {
-      editComment(postId, editCommentId, { text: editCommentText });
+      editComment(postId, editCommentId, { comment: editCommentText });
       setEditCommentId(null);
       setEditCommentText("");
     }
   };
-
+  console.log(comments);
   return (
     <div className="my-4">
       <h4 className="text-lg font-bold mb-2">Comments</h4>
-      {comments?.map((comment) => (
+      {comments.map((comment) => (
         <div key={comment.id} className="mb-4">
           <div className="flex items-center mb-2">
             <img
@@ -56,6 +65,7 @@ const Comments = ({
               <input
                 type="text"
                 value={editCommentText}
+                name="comment"
                 onChange={(e) => setEditCommentText(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded"
               />
@@ -68,7 +78,7 @@ const Comments = ({
             </div>
           ) : (
             <div className="flex items-center mb-2">
-              <p className="mr-2">{comment.text}</p>
+              <p className="mr-2">{comment.comment}</p>
               <button
                 onClick={() => handleDeleteComment(comment.id)}
                 className="px-2 py-1 bg-red-500 text-white rounded mr-2"
@@ -88,8 +98,8 @@ const Comments = ({
       <div className="mt-4">
         <input
           type="text"
-          value={commentText}
-          onChange={(e) => setCommentText(e.target.value)}
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
           className="w-full p-2 border border-gray-300 rounded"
         />
         <button
@@ -103,6 +113,13 @@ const Comments = ({
   );
 };
 
-export default connect(null, { addComment, deleteComment, editComment })(
-  Comments
-);
+const mapStateToProps = (state) => ({
+  comments: state.posts.comments || [], // Access the comments property correctly
+});
+(state) => state.bank;
+export default connect(mapStateToProps, {
+  fetchComments,
+  addComment,
+  deleteComment,
+  editComment,
+})(Comments);
