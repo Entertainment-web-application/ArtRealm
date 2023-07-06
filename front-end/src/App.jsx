@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
@@ -11,13 +9,10 @@ import ProfilePage from "./Pages/ProfilePage";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
 
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
 function App() {
-  const [currentPath, setCurrentPath] = useState(false);
-
-  useEffect(() => {
-    setCurrentPath(window.location.pathname);
-  }, [window.location.pathname]);
-
   const ScrollToTop = () => {
     const { pathname } = useLocation();
 
@@ -31,9 +26,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {currentPath !== "/Login" && currentPath !== "/SignUp" && <Navbar />}
         <ScrollToTop />
 
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Blog" element={<Blog />} />
@@ -44,7 +39,7 @@ function App() {
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {currentPath !== "/Login" && currentPath !== "/SignUp" && <Footer />}
+        <Footer />
       </BrowserRouter>
     </>
   );
