@@ -10,35 +10,43 @@ import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
 
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, createContext } from "react";
+export const UpdateContext = createContext();
 
 function App() {
-  const ScrollToTop = () => {
-    const { pathname } = useLocation();
+  const [update, setUpdate] = useState(false);
+  const [deleted, setDeleted] = useState(true);
 
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [pathname]);
+  // const ScrollToTop = () => {
+  //   const { pathname } = useLocation();
 
-    return null;
-  };
+  //   useEffect(() => {
+  //     window.scrollTo(0, 0);
+  //   }, [pathname]);
+
+  //   return null;
+  // };
 
   return (
     <>
       <BrowserRouter>
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
 
         <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Blog" element={<Blog />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/ProfilePage" element={<ProfilePage />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
-          <Route path="/AboutUs" element={<AboutUs />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <UpdateContext.Provider
+          value={{ update, setUpdate, deleted, setDeleted }}
+        >
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Blog" element={<Blog />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/ProfilePage" element={<ProfilePage />} />
+            <Route path="/ContactUs" element={<ContactUs />} />
+            <Route path="/AboutUs" element={<AboutUs />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </UpdateContext.Provider>
         <Footer />
       </BrowserRouter>
     </>

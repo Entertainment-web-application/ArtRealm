@@ -1,4 +1,4 @@
-const pool = require('../db');
+const pool = require("../db");
 const { jwtGenerator } = require("../utils/jwtGenerator");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
@@ -7,7 +7,9 @@ const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [email]);
+    const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
+      email,
+    ]);
 
     if (user.rows.length !== 0) {
       return res.status(401).send("User already exists. Please log in.");
@@ -61,8 +63,30 @@ const login = async (req, res) => {
     return res.status(500).send("Server Error");
   }
 };
+const getUserData = async (req, res) => {
+  const userId = req.user_id;
+  try {
+    const client = await pool.connect();
+    const query = "SELECT * FROM users WHERE id = $1 ";
+    const values = [userId];
+    const result = await client.query(query, values);
 
+    if (result.rows.length > 0) {
+      // User data found
+      res.status(200).json(result.rows[0]);
+    } else {
+      // User not found
+      res.status(404).json({ error: "User not found" });
+    }
+
+    client.release();
+  } catch (error) {
+    // Error occurred while querying the database
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 module.exports = {
   login,
-  signup
+  signup,
+  getUserData,
 };

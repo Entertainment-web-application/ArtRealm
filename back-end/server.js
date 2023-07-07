@@ -1,6 +1,7 @@
 require("dotenv").config();
-const userRoutes = require("./routes/userRoutes")
-const PaintingsRoutes = require("./routes/paintingsRoutes")
+const userRoutes = require("./routes/userRoutes");
+const PaintingsRoutes = require("./routes/paintingsRoutes");
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -21,5 +22,5 @@ app.use("/images", express.static("images"));
 app.use("/post", require("./routes/posts"));
 app.use('/users' , userRoutes) 
 app.use('/Paintings' , PaintingsRoutes)  
-
+app.use("/api", require("./routes/dashboard"));
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
