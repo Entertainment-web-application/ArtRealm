@@ -2,7 +2,6 @@ const pool = require('../db');
 const { jwtGenerator } = require("../utils/jwtGenerator");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-const validInfo = require("../utils/UservalidInfo");
 
 const signup = async (req, res) => {
   try {
