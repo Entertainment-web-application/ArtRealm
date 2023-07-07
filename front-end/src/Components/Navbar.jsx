@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import logo from "../images/logo.png";
-import jwtDecode from "jwt-decode";
 
+import logo from "../images/logo.png";
+
+import jwtDecode from "jwt-decode";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -177,8 +178,10 @@ export default function Navbar() {
             </ul>
           </div>
         </div>
-      </nav>
-      <br /> <br /> <br /> <br /> <br />
+      </div>
+    </nav>
+   
+
     </>
   );
 }

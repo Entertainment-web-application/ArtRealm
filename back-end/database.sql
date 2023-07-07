@@ -28,3 +28,13 @@ CREATE TABLE users (
   user_password VARCHAR(255) NOT NULL,
   deleted BOOLEAN DEFAULT false
 );
+
+
+CREATE TABLE Paintings (
+    ID INT PRIMARY KEY,
+   Artist_Name VARCHAR(255),
+    Painting_Name VARCHAR(255),
+    ImageURL TEXT,
+    Category VARCHAR(255),
+    Rate NUMERIC(10, 2)
+);
