@@ -4,12 +4,10 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import EditButton from "../Components/EditButton";
 export default function ProfilePage() {
-  const [userId, setUserId] = useState();
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
-  const [user, setUser] = useState([]);
-  const [userAllDonatedPosts, setUserAllDonatedPosts] = useState([]);
-  const [userAllDonatedPostsF, setUserAllDonatedPostsF] = useState([]);
+  const [userAllPosts, setuserAllPosts] = useState([]);
+
   const fetchData = async () => {
     try {
       // const token = localStorage.getItem("token");
@@ -46,6 +44,7 @@ export default function ProfilePage() {
         config
       );
       console.log(response.data);
+      setuserAllPosts(response.data)
     } catch (error) {
       console.error("Error retrieving data:", error);
     }
@@ -57,145 +56,100 @@ export default function ProfilePage() {
   }, []);
   return (
     <>
-      <link
-        rel="stylesheet"
-        href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css"
-      />
-      <link
-        rel="stylesheet"
-        href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
-      />
+      
+<div className="h-screen bg-gray-200 ">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/2 ms:1/3">
+            {/* <!-- Left side content --> */}
+            <div className="h-screen bg-gray-200   pt-8">
+              <div>
+                <div className="w-full ms-8 mx-auto bg-white rounded-lg overflow-hidden shadow-lg">
+                  <div className="border-b px-4 pb-6">
+                    <div className="text-center my-4">
+                      <img
+                        className="h-32 w-32 rounded-full border-4 border-white mx-auto my-4"
+                        src="https://cdn-icons-png.flaticon.com/512/1165/1165821.png"
+                        alt=""
+                      />
+                   
+                        <div className="py-2">
+                          <h3 className="font-bold text-2xl mb-1"> {userName}{" "}</h3>
+                        </div>
+                    
+                    </div>
+                    <div className="flex gap-2 px-2  justify-center ">
+                      <div className="space-x-8 flex justify-center mt-32 md:mt-0 md:justify-center">
+                        
 
-      <main className="profile-page">
-        <section className="relative block h-500-px">
-          <div
-            className="absolute top-0 w-full h-full bg-center bg-cover"
-            style={{
-              backgroundImage:
-                'url("https://img.freepik.com/free-photo/multi-colored-abstract-painting-with-bright-blue-yellow-generative-ai_188544-9474.jpg?size=626&ext=jpg&ga=GA1.2.1283963378.1677416044&semt=ais")',
-            }}
-          >
-            <span
-              id="blackOverlay"
-              className="w-full h-full absolute opacity-50 bg-black"
-            />
-          </div>
-          <div
-            className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-            style={{ transform: "translateZ(0px)" }}
-          >
-            <svg
-              className="absolute bottom-0 overflow-hidden"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="none"
-              version="1.1"
-              viewBox="0 0 2560 100"
-              x={0}
-              y={0}
-            >
-              <polygon
-                className="text-blueGray-200 fill-current"
-                points="2560 0 2560 100 0 100"
-              />
-            </svg>
-          </div>
-        </section>
-
-        <section className="relative py-16 bg-blueGray-200">
-          <div className="container mx-auto px-4">
-            <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
-              <div className="px-6">
-                <div className="flex flex-wrap justify-center">
-                  <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center mt-5">
-                    <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-2">
-                      {userName}{" "}
-                    </h3>
+                         <EditButton  className="text-white py-2 px-4 uppercase rounded bg-red-500 hover:bg-red-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5  "/>
+                      </div>
+                    </div>
                   </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
-                    <div className="py-6 px-3 mt-32 sm:mt-0"></div>
-                  </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-1">
-                    <div className="flex justify-center py-4 lg:pt-4 pt-8"></div>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="mb-2 text-blueGray-600">
-                    <i className="fas fa-inbox mr-2 text-lg text-blueGray-400" />
-                    {email}
-                  </div>
-                </div>
-
-                <div className="w-full md:w-1/2">
-                  <div className="py-6 px-3 mt-32 sm:mt-0">
-                    <EditButton />
-                  </div>
-
-                  <div className="w-full max-w-md mx-auto mt-8">
-                    <>
-                      <h2 className="text-2xl font-bold text-gray-800">
-                        My Posts
-                      </h2>
-
-                      {userAllDonatedPosts?.map((Post) => {
-                        return (
-                          <div className="flex flex-row flex-wrap   rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start ">
-                            <div className="sm:ml-4 sm:flex sm:w-full mt-5 ">
-                              <div className="flex flex-wrap gap-5 flex-column items-center">
-                                <div className="justify-start">
-                                  <p className="text-lg my-5">
-                                    <span className="font-bold">
-                                      beneficiary :{" "}
-                                    </span>{" "}
-                                    {Post.Name}{" "}
-                                  </p>
-                                  <p className="text-lg my-5">
-                                    <span className="font-bold">
-                                      {" "}
-                                      The amount needed :{" "}
-                                    </span>
-                                    {Post.price}
-                                  </p>
-                                  <p className="text-lg my-5">
-                                    {" "}
-                                    <span className="text-md font-bold">
-                                      {" "}
-                                      My Donation :{" "}
-                                    </span>
-                                    {Post.currentDonation}{" "}
-                                  </p>
-                                </div>
+                  <div className="px-4 py-4 w-full ">
+                    <div className="flex gap-2 items-center text-gray-800r mb-4">
+                      <div className="bg-white w-full shadow overflow-hidden sm:rounded-lg">
+                       
+                          <div className="border-t border-gray-200">
+                            <dl>
+                              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-sm font-medium text-gray-500">Full name</dt>
+                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                   {userName}{" "}
+                                </dd>
                               </div>
-                            </div>
-                            <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-                              <div className="flex flex-wrap justify-center">
-                                <div className="w-full lg:w-9/12 px-4">
-                                  <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                                    <span
-                                      className="font-bold"
-                                      style={{ color: "#219d80" }}
-                                    >
-                                      GIVE LIFE
-                                    </span>{" "}
-                                    THANK YOU FOR YOUR DONATION
-                                  </p>
-                                </div>
+                              <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt className="text-sm font-medium text-gray-500">Email address</dt>
+                                <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                  {email}
+                                </dd>
                               </div>
-                            </div>
+                              
+                             
+                            </dl>
                           </div>
-                        );
-                      })}
-                    </>
+                      
+                      </div>
+                    </div>
+                    <div className="flex"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-        <div
-          id="edit-portal"
-          className="fixed  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50   rounded-lg p-6"
-        ></div>
-      </main>
+          <div className="w-full md:w-1/2">
+            {/* <!-- Right side content --> */}
+            <div className="w-full max-w-md mx-auto mt-8">
+              <div className="flex border-b border-gray-300">
+              
+                
+              </div>
+              <div id="tab1" className={`tabcontent p-4 `}>
+                <h2 className="text-lg font-bold text-gray-800">User Post</h2>
+                <div className="mt-2 text-gray-700  overflow-y-auto" style={{ height: "31rem" }}>
+                  {userAllPosts.length > 0 ? (
+                    userAllPosts.map((post, index) => (
+                      <p className="mt-2 text-gray-700" key={index}>
+                        <div className="justify-between  rounded-lg bg-white p-6 shadow-md sm:flex">
+                          <div>
+                            <p className="font-bold">{post.title}</p>
+                            <p className="mt-2 text-gray-600 text-sm">{post.description}</p>
+                          </div>
+                          <div className="mt-4 sm:mt-0 sm:ml-4">
+                            <p className="font-bold text-gray-600">Likes: {post.likes}</p>
+                          </div>
+                        </div>
+                      </p>
+                    ))
+                  ) : (
+                    <p>No Post for the  {userName} .</p>
+                  )}
+                </div>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

@@ -130,16 +130,8 @@ export const addComment = (postId, comment) => async (dispatch) => {
 };
 
 export const fetchComments = (postId) => async (dispatch) => {
-  // Check if postId is falsy
-  if (!postId) {
-    console.log("Post ID is required");
-    return;
-  }
-
   try {
-    const res = await axios.get(
-      `http://localhost:3500/post/getAllComments/${postId}`
-    );
+    const res = await axios.get(`http://localhost:3500/post/getAllComments`);
     const comments = res.data;
     console.log(comments);
     dispatch({

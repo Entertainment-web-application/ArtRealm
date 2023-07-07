@@ -6,6 +6,7 @@ import {
   editComment,
   fetchComments,
 } from "../actions/postActions";
+import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
 
 const Comments = ({
   comments,
@@ -46,28 +47,43 @@ const Comments = ({
     }
   };
   console.log(comments);
+  // Filter comments based on postId
+  const filteredComments = comments.filter(
+    (comment) => comment.post_id === postId
+  );
+
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split("T")[0].split("-");
+    return `${year}-${month}-${day}`;
+  };
   return (
     <div className="my-4">
-      <h4 className="text-lg font-bold mb-2">Comments</h4>
-      {comments.map((comment) => (
-        <div key={comment.id} className="mb-4">
+      <h4 className="text-lg font-bold mb-2 pl-4">Comments</h4>
+      {filteredComments.map((comment) => (
+        <div
+          key={comment.id}
+          className="mb-4 p-4 bg-white rounded-lg shadow-md"
+        >
           <div className="flex items-center mb-2">
             <img
-              src={comment.avatar}
+              src="https://cdn-icons-png.flaticon.com/512/1165/1165821.png"
               alt="Profile Avatar"
               className="w-6 h-6 rounded-full mr-2"
             />
             <span className="mr-2">{comment.name}</span>
-            <span>{comment.time}</span>
+            <div className="flex items-center text-sm text-gray-600">
+              <FaClock className="mr-1" />
+              <span>{formatDate(comment.timestamp)}</span>
+            </div>
           </div>
           {editCommentId === comment.id ? (
-            <div className="mb-2">
+            <div className="flex items-center mb-2 p-5">
               <input
                 type="text"
                 value={editCommentText}
                 name="comment"
                 onChange={(e) => setEditCommentText(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
                 onClick={handleSaveComment}
@@ -81,30 +97,31 @@ const Comments = ({
               <p className="mr-2">{comment.comment}</p>
               <button
                 onClick={() => handleDeleteComment(comment.id)}
-                className="px-2 py-1 bg-red-500 text-white rounded mr-2"
+                className="flex items-center justify-center w-6 h-6 bg-red-500 text-white rounded-full mr-2"
               >
-                Delete
+                <FaTrash />
               </button>
               <button
                 onClick={() => handleEditComment(comment.id, comment.text)}
-                className="px-2 py-1 bg-gray-500 text-white rounded"
+                className="flex items-center justify-center w-6 h-6 bg-gray-500 text-white rounded-full"
               >
-                Edit
+                <FaEdit />
               </button>
             </div>
           )}
         </div>
       ))}
-      <div className="mt-4">
+      <div className="mt-4 flex p-5">
         <input
           type="text"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="flex-1 p-2 border border-gray-300 rounded mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter your comment"
         />
         <button
           onClick={handleAddComment}
-          className="px-4 py-2 bg-green-500 text-white rounded"
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:bg-green-600 focus:outline-none"
         >
           Add Comment
         </button>

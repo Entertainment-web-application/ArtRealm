@@ -19,22 +19,22 @@ const addNewPost = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+
 const getAllPosts = async (req, res) => {
   try {
-    const client = await pool.connect();
-
     const query = "SELECT * FROM post";
-
-    const result = await client.query(query);
+    const result = await pool.query(query);
     const allPosts = result.rows;
-
     res.status(200).json(allPosts);
-    console.log(allPosts);
   } catch (error) {
     console.error("Error retrieving posts:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 const deletePost = async (req, res) => {
   const postId = req.params.postId;
   const userId = req.user_id;
@@ -100,25 +100,13 @@ const addNewComment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 const getAllComments = async (req, res) => {
-  const postId = req.params.postId;
-  console.log(postId);
-  // Check if postId is not undefined
-  if (!postId) {
-    return res.status(400).json({ message: "Post ID is required" });
-  }
-
   try {
-    const client = await pool.connect();
-
-    const query = "SELECT * FROM comments WHERE post_id = $1";
-    const values = [postId];
-
-    const result = await client.query(query, values);
+    const query = "SELECT * FROM comments";
+    const result = await pool.query(query);
     const allComments = result.rows;
-
-    client.release();
-
     res.status(200).json(allComments);
   } catch (error) {
     console.error("Error retrieving comments:", error);
