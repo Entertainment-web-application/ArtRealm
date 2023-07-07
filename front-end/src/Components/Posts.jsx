@@ -11,6 +11,7 @@ import {
   DialogFooter,
 } from "@material-tailwind/react";
 import { UpdateContext } from "../App";
+import jwtDecode from "jwt-decode";
 
 const Posts = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Posts = () => {
   const [editedPostId, setEditedPostId] = useState(null);
   const { update, setUpdate } = useContext(UpdateContext);
   const { deleted, setDeleted } = useContext(UpdateContext);
-
+  const [userId, setuserId] = useState();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -49,7 +50,16 @@ const Posts = () => {
     const [year, month, day] = dateString.split("T")[0].split("-");
     return `${year}-${month}-${day}`;
   };
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Decode the token to extract user information
+      const decodedToken = jwtDecode(token);
+      if (decodedToken) {
+        setuserId(decodedToken.user_id);
+      }
+    }
+  }, []);
   return (
     <>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -68,20 +78,22 @@ const Posts = () => {
                       {post.author}
                     </h3>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => handleDelete(post.id)}
-                      className="flex items-center justify-center w-8 h-8 bg-red-500 text-white rounded-full hover:bg-red-600 focus:bg-red-600 focus:outline-none"
-                    >
-                      <FaTrash />
-                    </button>
-                    <button
-                      onClick={() => handleOpen(post.id)}
-                      className="flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:bg-blue-600 focus:outline-none"
-                    >
-                      <FaEdit />
-                    </button>
-                  </div>
+                  {post.user_id == userId && (
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => handleDelete(post.id)}
+                        className="flex items-center justify-center w-8 h-8 bg-red-500 text-white rounded-full hover:bg-red-600 focus:bg-red-600 focus:outline-none"
+                      >
+                        <FaTrash />
+                      </button>
+                      <button
+                        onClick={() => handleOpen(post.id)}
+                        className="flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:bg-blue-600 focus:outline-none"
+                      >
+                        <FaEdit />
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="flex items-center text-sm text-gray-600 mb-4">
                   <FaClock className="mr-1" />
@@ -146,7 +158,7 @@ const Posts = () => {
                 </DialogFooter>
               </Dialog>
 
-              <Comments postId={post.id} />
+              <Comments postId={post.id} userId={userId} />
             </div>
           </div>
         ))}

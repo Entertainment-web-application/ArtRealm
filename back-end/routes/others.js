@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const dashboardController = require("../controller/dashboard");
+const Controller = require("../controller/others");
 const userController = require("../controller/userController");
 const verifyJWT = require("../middleware/verifyJWT");
-router.get("/aboutus", dashboardController.getAboutUs);
-router.put("/contactus", verifyJWT, dashboardController.sendContact);
+router.get("/aboutus", Controller.getAboutUs);
+router.put("/sendFeedBack", Controller.sendContact);
 router.get("/userData", verifyJWT, userController.getUserData);
 
 module.exports = router;

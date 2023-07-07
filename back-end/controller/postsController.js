@@ -1,7 +1,9 @@
 const pool = require("../db");
 
 const addNewPost = async (req, res) => {
-  const { user_id, body } = req;
+  const user_id = req.user_id;
+
+  const { body } = req;
   const { title, description } = body;
 
   try {
