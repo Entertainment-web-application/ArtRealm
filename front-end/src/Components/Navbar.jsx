@@ -47,15 +47,7 @@ export default function Navbar() {
       <nav className="fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 bg-opacity-50">
         <div className="max-w-screen-xl flex flex-wrap  items-center justify-between mx-auto p-4">
           <Link to="/" className="flex items-center">
-            <img
-              src={logo}
-              className="h-12 mr-3 "
-              alt="Flowbite Logo"
-              style={{
-                width: "10rem",
-                height: "5rem",
-              }}
-            />
+            <img src={logo} className="h-12 w-32 mr-3 " alt="Flowbite Logo" />
           </Link>
           <div className="flex md:order-2">
             {isLoggedIn ? (
@@ -178,10 +170,7 @@ export default function Navbar() {
             </ul>
           </div>
         </div>
-      </div>
-    </nav>
-   
-
+      </nav>
     </>
   );
 }
