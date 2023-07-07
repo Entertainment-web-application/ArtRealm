@@ -7,9 +7,10 @@ import {
   fetchComments,
 } from "../actions/postActions";
 import { UpdateContext } from "../App";
+
 import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
 
-const Comments = ({ postId, userId }) => {
+const Comments = ({ postId, userId  }) => {
   const comments = useSelector((state) => state.posts.comments || []);
   const dispatch = useDispatch();
 
@@ -56,6 +57,9 @@ const Comments = ({ postId, userId }) => {
     }
   };
 
+
+
+
   // Filter comments based on postId
   const filteredComments = comments.filter(
     (comment) => comment.post_id === postId
@@ -97,27 +101,39 @@ const Comments = ({ postId, userId }) => {
               </button>
             </div>
           ) : (
-            comment.user_id == userId && (
+         
               <div className="flex items-center mb-2">
+
                 <p className="mr-2">{comment.comment}</p>
-                <button
-                  onClick={() => handleDeleteComment(comment.id)}
-                  className="flex items-center justify-center w-6 h-6 bg-red-500 text-white rounded-full mr-2"
-                >
-                  <FaTrash />
-                </button>
-                <button
-                  onClick={() => handleEditComment(comment.id, comment.text)}
-                  className="flex items-center justify-center w-6 h-6 bg-gray-500 text-white rounded-full"
-                >
-                  <FaEdit />
-                </button>
+         
+                {comment.user_id == userId && (
+                  <>
+                    <button
+                      onClick={() => handleDeleteComment(comment.id)}
+                      className="flex items-center justify-center w-6 h-6 bg-red-500 text-white rounded-full mr-2"
+                    >
+                      <FaTrash />
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleEditComment(comment.id, comment.text)
+                      }
+                      className="flex items-center justify-center w-6 h-6 bg-gray-500 text-white rounded-full"
+                    >
+                      <FaEdit />
+                    </button>
+                  </>
+                )
+
+
+
+
               </div>
-            )
+         
           )}
         </div>
       ))}
-      {!userId == undefined && (
+      { userId &&  (
         <div className="mt-4 flex p-5">
           <input
             type="text"
