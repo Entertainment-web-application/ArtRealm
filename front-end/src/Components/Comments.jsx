@@ -1,37 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   addComment,
   deleteComment,
   editComment,
   fetchComments,
 } from "../actions/postActions";
+import { UpdateContext } from "../App";
+
+const Comments = ({ postId }) => {
+  const comments = useSelector((state) => state.posts.comments || []);
+  const dispatch = useDispatch();
 import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
 
-const Comments = ({
-  comments,
-  postId,
-  addComment,
-  editComment,
-  fetchComments,
-  deleteComment,
-}) => {
   const [comment, setComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
+  const { update, setUpdate } = useContext(UpdateContext);
+
   useEffect(() => {
-    fetchComments(postId);
-  }, [postId]);
+    dispatch(fetchComments(postId));
+  }, [dispatch, postId, update]);
 
   const handleAddComment = () => {
     if (comment) {
-      addComment(postId, { comment: comment });
+      dispatch(addComment(postId, { comment: comment }));
+      setUpdate(!update);
       setComment("");
     }
   };
-  console.log(comment);
+
   const handleDeleteComment = (commentId) => {
-    deleteComment(postId, commentId);
+    dispatch(deleteComment(postId, commentId));
+    setUpdate(!update);
   };
 
   const handleEditComment = (commentId, comment) => {
@@ -41,21 +42,23 @@ const Comments = ({
 
   const handleSaveComment = () => {
     if (editCommentId && editCommentText) {
-      editComment(postId, editCommentId, { comment: editCommentText });
+      dispatch(
+        editComment(postId, editCommentId, { comment: editCommentText })
+      );
       setEditCommentId(null);
+      setUpdate(!update);
+
       setEditCommentText("");
     }
   };
-  console.log(comments);
+
   // Filter comments based on postId
   const filteredComments = comments.filter(
     (comment) => comment.post_id === postId
   );
 
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split("T")[0].split("-");
-    return `${year}-${month}-${day}`;
-  };
+
+
   return (
     <div className="my-4">
       <h4 className="text-lg font-bold mb-2 pl-4">Comments</h4>
@@ -130,13 +133,4 @@ const Comments = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  comments: state.posts.comments || [], // Access the comments property correctly
-});
-(state) => state.bank;
-export default connect(mapStateToProps, {
-  fetchComments,
-  addComment,
-  deleteComment,
-  editComment,
-})(Comments);
+export default Comments;

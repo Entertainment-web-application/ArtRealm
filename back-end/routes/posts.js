@@ -11,6 +11,7 @@ router.post(
   verifyJWT,
   postsController.addNewComment
 );
+
 router.get("/getAllComments", postsController.getAllComments);
 router.delete(
   "/deleteComment/:postId/comments/:commentId",

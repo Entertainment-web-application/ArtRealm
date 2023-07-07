@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchPosts, deletePost, editPost } from "../actions/postActions";
 import Comments from "./Comments";
 import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
@@ -10,32 +10,47 @@ import {
   DialogBody,
   DialogFooter,
 } from "@material-tailwind/react";
+import { UpdateContext } from "../App";
 
-// import { post } from "../../../back-end/routes/posts";
-
-const Posts = ({ posts, fetchPosts, deletePost, editPost }) => {
+const Posts = () => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState([]);
-  function handleChange(e) {
+  const [formData, setFormData] = useState({});
+  const [editedPostId, setEditedPostId] = useState(null);
+  const { update, setUpdate } = useContext(UpdateContext);
+  const { deleted, setDeleted } = useContext(UpdateContext);
+
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  }
-  const handleOpen = () => setOpen(!open);
+  };
+
+  const handleOpen = (postId) => {
+    setFormData(posts.find((post) => post.id === postId)); // Set the form data to the current post being edited
+    setEditedPostId(postId);
+    setOpen(true);
+  };
 
   useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
+    dispatch(fetchPosts());
+  }, [dispatch, update, deleted]);
 
   const handleDelete = (postId) => {
-    deletePost(postId);
-  };
-  const handleEdit = (postId) => {
-    editPost(postId, formData);
+    dispatch(deletePost(postId));
+    setUpdate(!update);
   };
 
+  const handleEdit = (postId) => {
+    dispatch(editPost(postId, formData));
+    setOpen(false);
+    setUpdate(!update);
+  };
+  const posts = useSelector((state) => state.posts.posts);
   const formatDate = (dateString) => {
     const [year, month, day] = dateString.split("T")[0].split("-");
     return `${year}-${month}-${day}`;
   };
+
+
   return (
     <>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -114,22 +129,24 @@ const Posts = ({ posts, fetchPosts, deletePost, editPost }) => {
                   <Button
                     variant="text"
                     color="red"
-                    onClick={handleOpen}
+                    onClick={() => setOpen(false)}
+
                     className="mr-1"
                   >
                     <span>Cancel</span>
                   </Button>
                   <Button
+                    variant="gradient"
                     color="green"
-                    onClick={() => {
-                      handleEdit(post.id);
-                      handleOpen();
-                    }}
+                    onClick={() => handleEdit(post.id)}
+                    color="green"
+
                   >
                     <span>Confirm</span>
                   </Button>
                 </DialogFooter>
               </Dialog>
+
               <Comments postId={post.id} />
             </div>
           </div>
@@ -139,10 +156,4 @@ const Posts = ({ posts, fetchPosts, deletePost, editPost }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  posts: state.posts.posts,
-});
-
-export default connect(mapStateToProps, { fetchPosts, deletePost, editPost })(
-  Posts
-);
+export default Posts;
