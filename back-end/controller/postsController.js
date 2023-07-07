@@ -19,8 +19,6 @@ const addNewPost = async (req, res) => {
   }
 };
 
-
-
 const getAllPosts = async (req, res) => {
   try {
     const query = "SELECT * FROM post";
@@ -33,11 +31,9 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-
 const deletePost = async (req, res) => {
   const postId = req.params.postId;
   const userId = req.user_id;
-
   try {
     // Delete the comments associated with the post
     await pool.query("DELETE FROM comments WHERE post_id = $1", [postId]);
@@ -48,7 +44,7 @@ const deletePost = async (req, res) => {
       userId,
     ]);
 
-    res.status(200);
+    res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to delete post" });
@@ -107,7 +103,6 @@ const addNewComment = async (req, res) => {
   }
 };
 
-
 const getAllComments = async (req, res) => {
   try {
     const query = "SELECT * FROM comments";
@@ -152,12 +147,10 @@ const editComment = async (req, res) => {
     );
     const updatedComment = result.rows[0];
 
-    res
-      .status(200)
-      .json({
-        message: "Comment updated successfully",
-        comment: updatedComment,
-      });
+    res.status(200).json({
+      message: "Comment updated successfully",
+      comment: updatedComment,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to update comment" });

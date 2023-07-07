@@ -7,11 +7,11 @@ import {
   fetchComments,
 } from "../actions/postActions";
 import { UpdateContext } from "../App";
+import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
 
 const Comments = ({ postId }) => {
   const comments = useSelector((state) => state.posts.comments || []);
   const dispatch = useDispatch();
-import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
 
   const [comment, setComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
@@ -39,6 +39,10 @@ import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
     setEditCommentId(commentId);
     setEditCommentText(comment);
   };
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split("T")[0].split("-");
+    return `${year}-${month}-${day}`;
+  };
 
   const handleSaveComment = () => {
     if (editCommentId && editCommentText) {
@@ -56,8 +60,6 @@ import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
   const filteredComments = comments.filter(
     (comment) => comment.post_id === postId
   );
-
-
 
   return (
     <div className="my-4">

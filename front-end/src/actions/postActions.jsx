@@ -94,7 +94,7 @@ export const editPost = (postId, formData) => async (dispatch) => {
     );
     dispatch({
       type: EDIT_POST,
-      payload: res.data,
+      payload: res.data.post,
     });
   } catch (err) {
     console.error(err);
@@ -130,7 +130,7 @@ export const addComment = (postId, comment) => async (dispatch) => {
   }
 };
 
-export const fetchComments = (postId) => async (dispatch) => {
+export const fetchComments = () => async (dispatch) => {
   try {
     const res = await axios.get(`http://localhost:3500/post/getAllComments`);
     const comments = res.data;

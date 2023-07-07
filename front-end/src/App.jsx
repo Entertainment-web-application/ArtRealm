@@ -17,20 +17,20 @@ function App() {
   const [update, setUpdate] = useState(false);
   const [deleted, setDeleted] = useState(true);
 
-  const ScrollToTop = () => {
-    const { pathname } = useLocation();
+  // const ScrollToTop = () => {
+  //   const { pathname } = useLocation();
 
-    useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [pathname]);
+  //   useEffect(() => {
+  //     window.scrollTo(0, 0);
+  //   }, [pathname]);
 
-    return null;
-  };
+  //   return null;
+  // };
 
   return (
     <>
       <BrowserRouter>
-        <ScrollToTop />
+        {/* <ScrollToTop /> */}
 
         <Navbar />
         <UpdateContext.Provider

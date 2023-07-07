@@ -50,7 +50,6 @@ const Posts = () => {
     return `${year}-${month}-${day}`;
   };
 
-
   return (
     <>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -77,7 +76,7 @@ const Posts = () => {
                       <FaTrash />
                     </button>
                     <button
-                      onClick={handleOpen}
+                      onClick={() => handleOpen(post.id)}
                       className="flex items-center justify-center w-8 h-8 bg-blue-500 text-white rounded-full hover:bg-blue-600 focus:bg-blue-600 focus:outline-none"
                     >
                       <FaEdit />
@@ -103,7 +102,10 @@ const Posts = () => {
                   </p>
                 </div>
               </div>
-              <Dialog open={open} handler={handleOpen}>
+              <Dialog
+                open={open && editedPostId === post.id}
+                handler={() => setOpen(false)}
+              >
                 <DialogHeader>Edit your post</DialogHeader>
                 <DialogBody divider>
                   <label htmlFor="title" className="text-gray-800">
@@ -130,7 +132,6 @@ const Posts = () => {
                     variant="text"
                     color="red"
                     onClick={() => setOpen(false)}
-
                     className="mr-1"
                   >
                     <span>Cancel</span>
@@ -139,8 +140,6 @@ const Posts = () => {
                     variant="gradient"
                     color="green"
                     onClick={() => handleEdit(post.id)}
-                    color="green"
-
                   >
                     <span>Confirm</span>
                   </Button>
