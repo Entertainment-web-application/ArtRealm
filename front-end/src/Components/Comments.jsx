@@ -9,7 +9,7 @@ import {
 import { UpdateContext } from "../App";
 import { FaTrash, FaEdit, FaClock } from "react-icons/fa";
 
-const Comments = ({ postId }) => {
+const Comments = ({ postId, userId }) => {
   const comments = useSelector((state) => state.posts.comments || []);
   const dispatch = useDispatch();
 
@@ -60,7 +60,6 @@ const Comments = ({ postId }) => {
   const filteredComments = comments.filter(
     (comment) => comment.post_id === postId
   );
-
   return (
     <div className="my-4">
       <h4 className="text-lg font-bold mb-2 pl-4">Comments</h4>
@@ -98,39 +97,43 @@ const Comments = ({ postId }) => {
               </button>
             </div>
           ) : (
-            <div className="flex items-center mb-2">
-              <p className="mr-2">{comment.comment}</p>
-              <button
-                onClick={() => handleDeleteComment(comment.id)}
-                className="flex items-center justify-center w-6 h-6 bg-red-500 text-white rounded-full mr-2"
-              >
-                <FaTrash />
-              </button>
-              <button
-                onClick={() => handleEditComment(comment.id, comment.text)}
-                className="flex items-center justify-center w-6 h-6 bg-gray-500 text-white rounded-full"
-              >
-                <FaEdit />
-              </button>
-            </div>
+            comment.user_id == userId && (
+              <div className="flex items-center mb-2">
+                <p className="mr-2">{comment.comment}</p>
+                <button
+                  onClick={() => handleDeleteComment(comment.id)}
+                  className="flex items-center justify-center w-6 h-6 bg-red-500 text-white rounded-full mr-2"
+                >
+                  <FaTrash />
+                </button>
+                <button
+                  onClick={() => handleEditComment(comment.id, comment.text)}
+                  className="flex items-center justify-center w-6 h-6 bg-gray-500 text-white rounded-full"
+                >
+                  <FaEdit />
+                </button>
+              </div>
+            )
           )}
         </div>
       ))}
-      <div className="mt-4 flex p-5">
-        <input
-          type="text"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          className="flex-1 p-2 border border-gray-300 rounded mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Enter your comment"
-        />
-        <button
-          onClick={handleAddComment}
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:bg-green-600 focus:outline-none"
-        >
-          Add Comment
-        </button>
-      </div>
+      {!userId == undefined && (
+        <div className="mt-4 flex p-5">
+          <input
+            type="text"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className="flex-1 p-2 border border-gray-300 rounded mr-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your comment"
+          />
+          <button
+            onClick={handleAddComment}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:bg-green-600 focus:outline-none"
+          >
+            Add Comment
+          </button>
+        </div>
+      )}
     </div>
   );
 };

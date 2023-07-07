@@ -11,15 +11,13 @@ import { mdiPail } from "@mdi/js";
 export default function AboutUs() {
   const [about_title, setAbout_title] = useState("");
   const [about_us, setAbout_us] = useState("");
-  const [aboutUsId, setAboutUsId] = useState();
 
   const fetchAboutUs = async () => {
     try {
       const response = await axios.get("http://localhost:3500/api/aboutUs");
       console.log(response.data);
-      setAbout_title(response.data[0].about_title);
-      setAbout_us(response.data[0].about_us);
-      setAboutUsId(response.data[0]._id);
+      setAbout_title(response.data[0].main_us_text);
+      setAbout_us(response.data[0].why_choose_us);
     } catch (error) {
       console.error("Error retrieving data:", error);
     }

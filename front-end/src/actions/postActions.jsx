@@ -26,9 +26,7 @@ export const fetchPosts = () => async (dispatch) => {
 
 // Add a new post
 export const addPost = (post) => async (dispatch) => {
-  // const token = localStorage.getItem("token");
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzNDU2Nzg5MCJ9.k0-WFGcVaQZdbpYvBepM_44tMqHmqzXPWO6f7QFdmXk";
+  const token = localStorage.getItem("token");
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -40,7 +38,7 @@ export const addPost = (post) => async (dispatch) => {
       "http://localhost:3500/post/CreatePost",
       post,
       config
-    ); // Replace with your API endpoint
+    );
     dispatch({
       type: ADD_POST,
       payload: res.data.post,
@@ -53,9 +51,7 @@ export const addPost = (post) => async (dispatch) => {
 
 // Delete a post
 export const deletePost = (postId) => async (dispatch) => {
-  // const token = localStorage.getItem("token");
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzNDU2Nzg5MCJ9.k0-WFGcVaQZdbpYvBepM_44tMqHmqzXPWO6f7QFdmXk";
+  const token = localStorage.getItem("token");
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -78,8 +74,8 @@ export const deletePost = (postId) => async (dispatch) => {
 };
 // Edit a post
 export const editPost = (postId, formData) => async (dispatch) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzNDU2Nzg5MCJ9.k0-WFGcVaQZdbpYvBepM_44tMqHmqzXPWO6f7QFdmXk";
+  const token = localStorage.getItem("token");
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -103,8 +99,8 @@ export const editPost = (postId, formData) => async (dispatch) => {
 
 // Add a comment to a post
 export const addComment = (postId, comment) => async (dispatch) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzNDU2Nzg5MCJ9.k0-WFGcVaQZdbpYvBepM_44tMqHmqzXPWO6f7QFdmXk";
+  const token = localStorage.getItem("token");
+
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -145,9 +141,7 @@ export const fetchComments = () => async (dispatch) => {
 
 // Delete a comment from a post
 export const deleteComment = (postId, commentId) => async (dispatch) => {
-  // const token = localStorage.getItem("token");
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzNDU2Nzg5MCJ9.k0-WFGcVaQZdbpYvBepM_44tMqHmqzXPWO6f7QFdmXk";
+  const token = localStorage.getItem("token");
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -24,17 +24,15 @@ const getAboutUs = async (req, res) => {
   }
 };
 const sendContact = async (req, res) => {
-  const userId = req.user_id;
   const { name, email, message, phone } = req.body;
-  console.log(message);
   try {
     // Connect to the database
     const client = await pool.connect();
 
     // Execute the SQL query to insert the contact data into the "contactus" table
     const query =
-      "INSERT INTO contactus (user_id, name, email, message, phone) VALUES ($1, $2, $3, $4, $5)";
-    const values = [userId, name, email, message, phone];
+      "INSERT INTO users_feedback ( user_name , user_email , message, user_phone ) VALUES ($1, $2, $3, $4)";
+    const values = [name, email, message, phone];
     await client.query(query, values);
 
     // Release the database connection

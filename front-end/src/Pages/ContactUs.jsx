@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 export default function ContactUs() {
-  const [userId, setUserId] = useState();
+  const [info, setInfo] = useState("");
   const [userMessages, setUserMessages] = useState([]);
   // const fetchProtectedData = async () => {
   //   try {
@@ -35,9 +35,7 @@ export default function ContactUs() {
     event.preventDefault();
 
     try {
-      // const token = localStorage.getItem("token");
-      const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTIzNDU2Nzg5MCJ9.k0-WFGcVaQZdbpYvBepM_44tMqHmqzXPWO6f7QFdmXk";
+      const token = localStorage.getItem("token");
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,7 +43,7 @@ export default function ContactUs() {
       };
 
       await axios.put(
-        `http://localhost:3500/api/contactUs/`,
+        `http://localhost:3500/api/sendFeedBack/`,
         { message: message, name: name, email: email, phone: phone },
         config
       );
@@ -53,6 +51,17 @@ export default function ContactUs() {
       console.error("Error updating user:", error);
     }
   };
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      const response = await axios.get(
+        `http://localhost:3500/admin/get-contactus`
+      );
+      setInfo(response.data);
+    };
+    fetchContactInfo();
+  }, []);
+  console.log(info);
+
   return (
     <>
       <div>
@@ -129,7 +138,7 @@ export default function ContactUs() {
                           Our Location
                         </h4>
                         <p className="text-body-color text-base">
-                          99 S.t - Zarqa City , Jordan
+                          {info[0].our_location}
                         </p>
                       </div>
                     </div>
@@ -151,7 +160,7 @@ export default function ContactUs() {
                           Phone Number
                         </h4>
                         <p className="text-body-color text-base">
-                          (+962)772536522
+                          {info[0].phonenumber}
                         </p>
                       </div>
                     </div>
@@ -171,7 +180,7 @@ export default function ContactUs() {
                           Email Address
                         </h4>
                         <p className="text-body-color text-base">
-                          info@GiveLife.com
+                          {info[0].email}
                         </p>
                       </div>
                     </div>
