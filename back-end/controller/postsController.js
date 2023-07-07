@@ -18,6 +18,9 @@ const addNewPost = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+
 const getAllPosts = async (req, res) => {
   try {
     const query = "SELECT * FROM post";
@@ -29,6 +32,8 @@ const getAllPosts = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 const deletePost = async (req, res) => {
   const postId = req.params.postId;
   const userId = req.user_id;
@@ -101,6 +106,8 @@ const addNewComment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 const getAllComments = async (req, res) => {
   try {
     const query = "SELECT * FROM comments";
