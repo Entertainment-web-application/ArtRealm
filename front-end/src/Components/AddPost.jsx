@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { connect } from "react-redux";
 import { addPost } from "../actions/postActions";
+import { UpdateContext } from "../App";
 
 const AddPost = ({ addPost }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const { update, setUpdate } = useContext(UpdateContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title && description) {
       addPost({ title, description });
+
+      setUpdate(!update);
+
       setTitle("");
       setDescription("");
     }

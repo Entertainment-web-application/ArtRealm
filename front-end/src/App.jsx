@@ -10,9 +10,13 @@ import Login from "./Pages/Login";
 import SignUp from "./Pages/Signup";
 
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, createContext } from "react";
+export const UpdateContext = createContext();
 
 function App() {
+  const [update, setUpdate] = useState(false);
+  const [deleted, setDeleted] = useState(true);
+
   const ScrollToTop = () => {
     const { pathname } = useLocation();
 
@@ -29,16 +33,20 @@ function App() {
         <ScrollToTop />
 
         <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Blog" element={<Blog />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/ProfilePage" element={<ProfilePage />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
-          <Route path="/AboutUs" element={<AboutUs />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <UpdateContext.Provider
+          value={{ update, setUpdate, deleted, setDeleted }}
+        >
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Blog" element={<Blog />} />
+            <Route path="/Login" element={<Login />} />
+            <Route path="/SignUp" element={<SignUp />} />
+            <Route path="/ProfilePage" element={<ProfilePage />} />
+            <Route path="/ContactUs" element={<ContactUs />} />
+            <Route path="/AboutUs" element={<AboutUs />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </UpdateContext.Provider>
         <Footer />
       </BrowserRouter>
     </>

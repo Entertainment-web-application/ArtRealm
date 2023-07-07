@@ -14,8 +14,6 @@ import {
 export const fetchPosts = () => async (dispatch) => {
   try {
     const res = await axios.get("http://localhost:3500/post/getAllPosts"); // Replace with your API endpoint
-    console.log(res.data);
-
     dispatch({
       type: FETCH_POSTS,
       payload: res.data,
@@ -45,7 +43,7 @@ export const addPost = (post) => async (dispatch) => {
     ); // Replace with your API endpoint
     dispatch({
       type: ADD_POST,
-      payload: res.data,
+      payload: res.data.post,
     });
   } catch (err) {
     console.error(err);
@@ -93,14 +91,13 @@ export const editPost = (postId, formData) => async (dispatch) => {
       `http://localhost:3500/post/editPost/${postId}`,
       formData,
       config
-    ); // Replace with your API endpoint
+    );
     dispatch({
       type: EDIT_POST,
       payload: res.data,
     });
   } catch (err) {
     console.error(err);
-    // Handle error
   }
 };
 
@@ -122,26 +119,21 @@ export const addComment = (postId, comment) => async (dispatch) => {
     );
     dispatch({
       type: ADD_COMMENT,
-      payload: { postId, comment: res.data },
+      payload: res.data.comment,
     });
+    // dispatch({
+    //   type: ADD_COMMENT,
+    //   payload: { postId, comment: res.data },
+    // });
   } catch (err) {
     console.error(err);
   }
 };
 
 export const fetchComments = (postId) => async (dispatch) => {
-  // Check if postId is falsy
-  if (!postId) {
-    console.log("Post ID is required");
-    return;
-  }
-
   try {
-    const res = await axios.get(
-      `http://localhost:3500/post/getAllComments/${postId}`
-    );
+    const res = await axios.get(`http://localhost:3500/post/getAllComments`);
     const comments = res.data;
-    console.log(comments);
     dispatch({
       type: FETCH_COMMENTS,
       payload: comments,
@@ -169,7 +161,7 @@ export const deleteComment = (postId, commentId) => async (dispatch) => {
     );
     dispatch({
       type: DELETE_COMMENT,
-      payload: { postId, commentId },
+      payload: commentId,
     });
   } catch (err) {
     console.error(err);
@@ -196,7 +188,7 @@ export const editComment =
       ); // Replace with your API endpoint
       dispatch({
         type: EDIT_COMMENT,
-        payload: { postId, comment: res.data },
+        payload: res.data.comment,
       });
     } catch (err) {
       console.error(err);

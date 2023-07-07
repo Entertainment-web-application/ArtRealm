@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect, useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   addComment,
   deleteComment,
   editComment,
   fetchComments,
 } from "../actions/postActions";
+import { UpdateContext } from "../App";
 
-const Comments = ({
-  comments,
-  postId,
-  addComment,
-  editComment,
-  fetchComments,
-  deleteComment,
-}) => {
+const Comments = ({ postId }) => {
+  const comments = useSelector((state) => state.posts.comments || []);
+  const dispatch = useDispatch();
+
   const [comment, setComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
+  const { update, setUpdate } = useContext(UpdateContext);
+
   useEffect(() => {
-    fetchComments(postId);
-  }, [postId]);
+    dispatch(fetchComments(postId));
+  }, [dispatch, postId, update]);
 
   const handleAddComment = () => {
     if (comment) {
-      addComment(postId, { comment: comment });
+      dispatch(addComment(postId, { comment: comment }));
+      setUpdate(!update);
       setComment("");
     }
   };
-  console.log(comment);
+
   const handleDeleteComment = (commentId) => {
-    deleteComment(postId, commentId);
+    dispatch(deleteComment(postId, commentId));
+    setUpdate(!update);
   };
 
   const handleEditComment = (commentId, comment) => {
@@ -40,16 +41,26 @@ const Comments = ({
 
   const handleSaveComment = () => {
     if (editCommentId && editCommentText) {
-      editComment(postId, editCommentId, { comment: editCommentText });
+      dispatch(
+        editComment(postId, editCommentId, { comment: editCommentText })
+      );
       setEditCommentId(null);
+      setUpdate(!update);
+
       setEditCommentText("");
     }
   };
-  console.log(comments);
+
+  // Filter comments based on postId
+  const filteredComments = comments.filter(
+    (comment) => comment.post_id === postId
+  );
+  console.log(filteredComments);
+
   return (
     <div className="my-4">
       <h4 className="text-lg font-bold mb-2">Comments</h4>
-      {comments.map((comment) => (
+      {filteredComments.map((comment) => (
         <div key={comment.id} className="mb-4">
           <div className="flex items-center mb-2">
             <img
@@ -113,13 +124,4 @@ const Comments = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  comments: state.posts.comments || [], // Access the comments property correctly
-});
-(state) => state.bank;
-export default connect(mapStateToProps, {
-  fetchComments,
-  addComment,
-  deleteComment,
-  editComment,
-})(Comments);
+export default Comments;

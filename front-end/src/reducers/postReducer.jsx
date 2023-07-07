@@ -37,8 +37,7 @@ export const postReducer = (state = initialState, action) => {
           post.id === action.payload.id ? action.payload : post
         ),
       };
-    case ADD_COMMENT:
-    case DELETE_COMMENT:
+
     case EDIT_COMMENT:
       return {
         ...state,
@@ -58,11 +57,11 @@ export const postReducer = (state = initialState, action) => {
         comments: action.payload,
       };
     case ADD_COMMENT:
-      console.log("khaled");
       return {
         ...state,
         comments: [...state.comments, action.payload],
       };
+
     case DELETE_COMMENT:
       return {
         ...state,
