@@ -3,25 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 export default function ContactUs() {
   const [info, setInfo] = useState("");
-  const [userMessages, setUserMessages] = useState([]);
-  // const fetchProtectedData = async () => {
-  //   try {
-  //     const token = localStorage.getItem("auth");
-  //     if (token) {
-  //       const response = await axios.get("http://localhost:5000/protected", {
-  //         headers: {
-  //           Authorization: token,
-  //         },
-  //       });
-  //       setUserId(response.data.user.id);
-  //       setUserMessages(response.data.user.message);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     console.log(false);
-  //   }
-  // };
   useEffect(() => {
     if (localStorage.auth != null) {
       fetchProtectedData();
@@ -51,13 +32,19 @@ export default function ContactUs() {
       console.error("Error updating user:", error);
     }
   };
-  useEffect(() => {
-    const fetchContactInfo = async () => {
+  const fetchContactInfo = async () => {
+    try {
       const response = await axios.get(
         `http://localhost:3500/admin/get-contactus`
       );
-      setInfo(response.data);
-    };
+
+      setInfo(response.data[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
     fetchContactInfo();
   }, []);
   console.log(info);
@@ -138,7 +125,7 @@ export default function ContactUs() {
                           Our Location
                         </h4>
                         <p className="text-body-color text-base">
-                          {info[0].our_location}
+                          {info.our_location}
                         </p>
                       </div>
                     </div>
@@ -160,7 +147,7 @@ export default function ContactUs() {
                           Phone Number
                         </h4>
                         <p className="text-body-color text-base">
-                          {info[0].phonenumber}
+                          {info.phonenumber}
                         </p>
                       </div>
                     </div>
@@ -180,7 +167,7 @@ export default function ContactUs() {
                           Email Address
                         </h4>
                         <p className="text-body-color text-base">
-                          {info[0].email}
+                          {info.email}
                         </p>
                       </div>
                     </div>

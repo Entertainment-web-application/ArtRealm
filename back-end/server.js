@@ -24,6 +24,6 @@ app.use("/post", require("./routes/posts"));
 app.use("/users", userRoutes);
 app.use("/Paintings", PaintingsRoutes);
 app.use("/api", require("./routes/others"));
-app.use("/admin", adminRoutes); // Added -- FA
+app.use("/admin", adminRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
