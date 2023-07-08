@@ -133,7 +133,8 @@ const Comments = ({ postId, userId  }) => {
           )}
         </div>
       ))}
-      { userId &&  (
+      {userId &&(
+
         <div className="mt-4 flex p-5">
           <input
             type="text"

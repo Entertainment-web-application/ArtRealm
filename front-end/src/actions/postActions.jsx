@@ -100,7 +100,7 @@ export const editPost = (postId, formData) => async (dispatch) => {
 // Add a comment to a post
 export const addComment = (postId, comment) => async (dispatch) => {
   const token = localStorage.getItem("token");
-
+console.log(token)
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
