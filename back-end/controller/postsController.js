@@ -23,7 +23,9 @@ const addNewPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const query = "SELECT * FROM post";
+    const query =
+      "SELECT post.*, users.user_name AS username FROM public.post JOIN public.users ON post.user_id = users.id; ";
+
     const result = await pool.query(query);
     const allPosts = result.rows;
     res.status(200).json(allPosts);
@@ -107,7 +109,9 @@ const addNewComment = async (req, res) => {
 
 const getAllComments = async (req, res) => {
   try {
-    const query = "SELECT * FROM comments";
+    const query =
+      "SELECT c.id, c.post_id, c.user_id, c.comment, c.timestamp, u.user_name FROM public.comments c JOIN public.users u ON c.user_id = u.id;";
+
     const result = await pool.query(query);
     const allComments = result.rows;
     res.status(200).json(allComments);
@@ -116,7 +120,6 @@ const getAllComments = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 const deleteComment = async (req, res) => {
   const postId = req.params.postId;
   const commentId = req.params.commentId;
