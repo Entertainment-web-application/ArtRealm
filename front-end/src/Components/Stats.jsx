@@ -1,17 +1,60 @@
-import React from 'react'
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Stats() {
+  const [users, setUsers] = useState([]);
+  const [paintings, setPaintings] = useState([]);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    fetchUsers();
+    fetchPaintings();
+    fetchPosts();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3500/api/userDataa");
+      setUsers(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  const fetchPaintings = async () => {
+    try {
+      const response = await axios.get("http://localhost:3500/Paintings/getPaintings");
+      setPaintings(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching paintings:", error);
+    }
+  };
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get("http://localhost:3500/post/getAllPosts");
+      setPosts(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+
   return (
     <div>
     <section className="py-10 bg-white sm:py-16 lg:py-24">
     <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-    <div className="mx-auto max-w-3xl text-center">
-    <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-     ArtRealm Stats
-    </h2>
+    <div className="header py-4 dark:bg-gray-700" >
+    <p className="text-center text-lg font-bold text-purple-600">Stats</p>
+    <h1 className="text-4xl md:text-4xl text-center text-gray-700 dark:text-white font-extrabold">
+    ArtRealm Stats
 
-    <p className="mt-4 text-gray-500 sm:text-xl">
-      those are some stats about our ArtRealm website
+    </h1>
+    <p className="max-w-2xl text-gray-500 dark:text-white text-center md:mx-auto mx-4 mt-4 text-sm md:text-lg">
+    those are some stats  our ArtRealm website.
     </p>
   </div>
       <div className="grid grid-cols-1 gap-6 px-6 mt-8 sm:px-0 lg:mt-16 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-12">
@@ -59,7 +102,7 @@ export default function Stats() {
                 />
               </svg>
               <div className="ml-4">
-                <h4 className="text-4xl font-bold text-gray-900">37+</h4>
+                <h4 className="text-4xl font-bold text-gray-900">{users.length}</h4>
                 <p className="mt-1.5 text-lg font-medium leading-tight text-gray-500">
                   Users
                 </p>
@@ -85,7 +128,7 @@ export default function Stats() {
                 />
               </svg>
               <div className="ml-4">
-                <h4 className="text-4xl font-bold text-gray-900">3,274</h4>
+                <h4 className="text-4xl font-bold text-gray-900">{paintings.length}</h4>
                 <p className="mt-1.5 text-lg font-medium leading-tight text-gray-500">
                 Paintings
                 </p>
@@ -111,7 +154,7 @@ export default function Stats() {
                 />
               </svg>
               <div className="ml-4">
-                <h4 className="text-4xl font-bold text-gray-900">98</h4>
+                <h4 className="text-4xl font-bold text-gray-900">{posts.length}</h4>
                 <p className="mt-1.5 text-lg font-medium leading-tight text-gray-500">
                   POSTS
                 </p>

@@ -2,15 +2,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 
-import logo from "../images/logo.png";
+import logo from "../images/artrealm-high-resolution-color-logo-removebg-preview.png";
 
 import jwtDecode from "jwt-decode";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
   const [activeLink, setActiveLink] = useState("home");
-  const [userRole, setUserRole] = useState("");
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -22,9 +20,6 @@ export default function Navbar() {
       // Decode the token to extract user information
       const decodedToken = jwtDecode(token);
       if (decodedToken) {
-        setUsername(decodedToken.username);
-        setUserRole(decodedToken.role);
-
         setIsLoggedIn(true);
       }
     }
@@ -37,7 +32,7 @@ export default function Navbar() {
   const handleLogout = () => {
     // Remove the token from localStorage
     localStorage.removeItem("token");
-
+  
     // Update the login status
     setIsLoggedIn(false);
   };
@@ -45,17 +40,22 @@ export default function Navbar() {
   return (
     <>
       <nav className="   w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 bg-opacity-50">
-        <div className="max-w-screen-xl flex flex-wrap  items-center justify-between mx-auto p-4">
-          <Link to="/" className="flex items-center">
-            <img src={logo} className="h-12 w-32 mr-3 " alt="Flowbite Logo" style={{height:"5rem"}} />
-          </Link>
-          <div className="flex md:order-2">
-            {isLoggedIn ? (
-              <>
-                <div className="flex items-center mr-4">
-                  {/* Render user profile icon here */}
-                  <Link
-                    to="/DonarProfile#"
+      <div className=" flex flex-wrap  items-center justify-around mx-auto ">
+      <Link to="/" className="flex items-center">
+        <img
+          src={logo}
+          // className="h-12 w-32 mr-3 "
+          // alt="Flowbite Logo"
+          style={{ height: "110px", width:"200px" }}
+        />
+      </Link>
+      <div className="flex md:order-2">
+        {isLoggedIn ? (
+          <>
+            <div className="flex items-center mr-4">
+              {/* Render user profile icon here */}
+              <Link
+                to="/ProfilePage"
                     className="flex items-center mr-4 text-gray-900 dark:text-gray-400"
                   >
                     {/* Render user profile icon here */}
@@ -65,7 +65,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   className="text-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-                  style={{ backgroundColor: "#1A56DB" }}
+                  style={{ backgroundColor: "#7831ed" }}
                   onClick={handleLogout}
                 >
                   Logout
@@ -76,7 +76,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   className="text-white focus:outline-none font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0"
-                  style={{ backgroundColor: "#1A56DB" }}
+                  style={{ backgroundColor: "#7831ed" }}
                 >
                   Join Us
                 </button>
@@ -118,8 +118,8 @@ export default function Navbar() {
                   to="/"
                   className={
                     activeLink === "home"
-                      ? "block py-2 pl-3 pr-4 text-[#1A56DB] rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#1A56DB] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline"
-                      : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#1A56DB] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline	"
+                      ? "block py-2 pl-3 pr-4 text-[#7831ed] rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#7831ed] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline"
+                      : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#7831ed] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline	"
                   }
                   aria-current="page"
                   onClick={() => handleLinkClick("home")}
@@ -132,8 +132,8 @@ export default function Navbar() {
                   to="Blog"
                   className={
                     activeLink === "OurPrograms"
-                      ? "block py-2 pl-3 pr-4 text-[#1A56DB] rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#1A56DB] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline"
-                      : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#1A56DB] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline	"
+                      ? "block py-2 pl-3 pr-4 text-[#7831ed] rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#7831ed] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline"
+                      : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#7831ed] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline	"
                   }
                   onClick={() => handleLinkClick("OurPrograms")}
                 >
@@ -146,8 +146,8 @@ export default function Navbar() {
                   to="AboutUs"
                   className={
                     activeLink === "about"
-                      ? "block py-2 pl-3 pr-4 text-[#1A56DB] rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#1A56DB] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline"
-                      : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#1A56DB] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline	"
+                      ? "block py-2 pl-3 pr-4 text-[#7831ed] rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#7831ed] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline"
+                      : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#7831ed] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline	"
                   }
                   onClick={() => handleLinkClick("about")}
                 >
@@ -159,8 +159,8 @@ export default function Navbar() {
                   to="contactus"
                   className={
                     activeLink === "Contact"
-                      ? "block py-2 pl-3 pr-4 text-[#1A56DB] rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#1A56DB] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline"
-                      : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#1A56DB] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline	"
+                      ? "block py-2 pl-3 pr-4 text-[#7831ed] rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#7831ed] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline"
+                      : "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#7831ed] md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 no-underline	"
                   }
                   onClick={() => handleLinkClick("Contact")}
                 >

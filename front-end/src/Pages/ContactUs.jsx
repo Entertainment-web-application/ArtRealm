@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 export default function ContactUs() {
-  const [info, setInfo] = useState({});
+
+  const [info, setInfo] = useState();
+
+ 
   useEffect(() => {
     if (localStorage.auth != null) {
       fetchProtectedData();
@@ -126,7 +129,7 @@ export default function ContactUs() {
                           Our Location
                         </h4>
                         <p className="text-body-color text-base">
-                          {info.our_location}
+                          { info && info.our_location}
                         </p>
                       </div>
                     </div>
@@ -148,7 +151,7 @@ export default function ContactUs() {
                           Phone Number
                         </h4>
                         <p className="text-body-color text-base">
-                          {info.phonenumber}
+                          {info && info.phonenumber}
                         </p>
                       </div>
                     </div>
@@ -168,7 +171,7 @@ export default function ContactUs() {
                           Email Address
                         </h4>
                         <p className="text-body-color text-base">
-                          {info.email}
+                          {info &&info.email}
                         </p>
                       </div>
                     </div>

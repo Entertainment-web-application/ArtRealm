@@ -22,16 +22,17 @@ export default function Ratedsection() {
 
   return (
 <>
-<div className="header py-4 dark:bg-gray-700">
-  <p className="text-center text-sm font-bold text-blue-500">PRICING</p>
+<div className="header py-4 dark:bg-gray-700 mt-10">
+  <p className="text-center text-lg font-bold text-purple-600">Top Rated</p>
   <h1 className="text-4xl md:text-4xl text-center text-gray-700 dark:text-white font-extrabold">
-    Get Lifetime Access
+    Explore our Top Rated Paintings
   </h1>
   <p className="max-w-2xl text-gray-500 dark:text-white text-center md:mx-auto mx-4 mt-4 text-sm md:text-lg">
-    Get Early access to premium components and all the additional benefits. Get
-    1-year updates for all the components and additional updates we release.
+    Immerse yourself in our carefully curated collection of top-rated paintings. Experience the artistry, emotions, and stories conveyed through these remarkable artworks. Discover the exceptional talent of renowned artists and find inspiration in their masterpieces.
   </p>
 </div>
+
+
 
 <div className="container mx-auto px-8">
 <div className="flex items-center justify-center w-full h-full py-24 sm:py-8 px-4">

@@ -85,8 +85,32 @@ const getUserData = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+const getAllUsers = async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const query = "SELECT * FROM users";
+  
+    const result = await client.query(query);
+
+    if (result.rows.length > 0) {
+      // Users found
+      res.status(200).json(result.rows);
+    } else {
+      // No users found
+      res.status(404).json({ error: "No users found" });
+    }
+
+    client.release();
+  } catch (error) {
+    // Error occurred while querying the database
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
 module.exports = {
   login,
   signup,
   getUserData,
+  getAllUsers,
 };

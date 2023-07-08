@@ -62,14 +62,15 @@ export default function Allcard() {
           {/* hero */}
           <div className="hero">
             {/* hero headline */}
-            <div className="hero-headline flex flex-col items-center justify-center pt-24 text-center">
-              <h1 className="font-bold text-3xl text-gray-900">
-                Stunning free images &amp; royalty free stock
-              </h1>
-              <p className="font-base text-base text-gray-600">
-                high quality stock images and videos shared by our talented community.
-              </p>
-            </div>
+            <div className="header py-4 dark:bg-gray-700 mt-5">
+  <p className="text-center text-lg font-bold text-purple-600">Painting Collections</p>
+  <h1 className="text-4xl md:text-4xl text-center text-gray-700 dark:text-white font-extrabold">
+   Explore the World of Paintings
+  </h1>
+  <p className="max-w-2xl text-gray-500 dark:text-white text-center md:mx-auto mx-4 mt-4 text-sm md:text-lg">
+  Discover a vast collection of high-quality paintings created by talented artists from around the world.   </p>
+</div>
+
             {/* image search box */}
             <div className="box pt-6">
               <div className="box-wrapper">
@@ -123,7 +124,7 @@ export default function Allcard() {
         <div className="flex flex-wrap -mx-4">
           {filteredPaintings.map((painting) => (
             <div key={painting.id} className="w-full md:w-1/2 lg:w-1/4 px-4 mb-4">
-              <Card className="w-full max-w-[19rem] shadow-lg">
+              <Card className="w-full max-w-[19rem] shadow-lg h-[450px] ">
                 <CardHeader floated={false} color="blue-gray">
                   <img
                     src={painting.imageurl}
