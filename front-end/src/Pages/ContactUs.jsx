@@ -67,7 +67,7 @@ export default function ContactUs() {
               <nav className="text-white mb-8">
                 <ol className="list-none p-0 inline-flex">
                   <li className="flex items-center">
-                    <Link to="/" style={{ color: "#219D80" }}>
+                    <Link to="/" style={{ color: "#7831ed" }}>
                       Home
                     </Link>
                     <svg
@@ -76,6 +76,7 @@ export default function ContactUs() {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      color="#7831ed"
                     >
                       <path
                         strokeLinecap="round"
@@ -225,7 +226,7 @@ export default function ContactUs() {
                         <button
                           type="submit"
                           className="bg-amber-500 border-primary w-full rounded border p-3 text-white transition hover:bg-opacity-90"
-                          style={{ backgroundColor: "#219D80" }}
+                          style={{ backgroundColor: "#7831ed" }}
                         >
                           Send Message
                         </button>

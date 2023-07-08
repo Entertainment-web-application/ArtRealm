@@ -33,7 +33,7 @@ export default function AboutUs() {
         className="bg-cover bg-center h-screen"
         style={{
           backgroundImage:
-            'url("https://images.pexels.com/photos/354939/pexels-photo-354939.jpeg?auto=compress&cs=tinysrgb&w=600")',
+            'url("https://images.pexels.com/photos/2179483/pexels-photo-2179483.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")',
           height: "400px",
         }}
       >
@@ -44,7 +44,7 @@ export default function AboutUs() {
             <nav className="text-white mb-8">
               <ol className="list-none p-0 inline-flex">
                 <li className="flex items-center">
-                  <Link to="/" style={{ color: "#219D80" }}>
+                  <Link to="/" style={{ color: "#11009E" }}>
                     Home
                   </Link>
                   <svg
@@ -53,6 +53,7 @@ export default function AboutUs() {
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                    color="#11009E"
                   >
                     <path
                       strokeLinecap="round"
@@ -80,7 +81,7 @@ export default function AboutUs() {
           <div className="mt-16 grid border divide-x divide-y rounded-xl overflow-hidden sm:grid-cols-2 lg:divide-y-0 lg:grid-cols-3 xl:grid-cols-4">
             <div className="relative group bg-white transition hover:z-[1] hover:shadow-2xl">
               <div className="relative p-8 space-y-8">
-                <Icon path={mdiHandCoin} size={2} color={"#219D80"} />
+                <Icon path={mdiHandCoin} size={2} color={"#7831ed"} />
                 <div className="space-y-2">
                   <h5 className="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">
                     Donation Options
@@ -95,7 +96,7 @@ export default function AboutUs() {
             </div>
             <div className="relative group bg-white transition hover:z-[1] hover:shadow-2xl">
               <div className="relative p-8 space-y-8">
-                <Icon path={mdiGift} size={2} color={"#219D80"} />
+                <Icon path={mdiGift} size={2} color={"#7831ed"} />
                 <div className="space-y-2">
                   <h5 className="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">
                     Donation Tracking
@@ -109,7 +110,7 @@ export default function AboutUs() {
             </div>
             <div className="relative group bg-white transition hover:z-[1] hover:shadow-2xl">
               <div className="relative p-8 space-y-8">
-                <Icon path={mdiIncognito} size={2} color={"#219D80"} />
+                <Icon path={mdiIncognito} size={2} color={"#7831ed"} />
                 <div className="space-y-2">
                   <h5 className="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">
                     Anonymous Donation Option
@@ -124,7 +125,7 @@ export default function AboutUs() {
             </div>
             <div className="relative group bg-white transition hover:z-[1] hover:shadow-2xl lg:hidden xl:block">
               <div className="relative p-8 space-y-8 border-dashed rounded-lg transition duration-300 group-hover:bg-white group-hover:border ">
-                <Icon path={mdiPail} size={2} color={"#219D80"} />
+                <Icon path={mdiPail} size={2} color={"#7831ed"} />
                 <div className="space-y-2">
                   <h5 className="text-xl text-gray-800 font-medium transition group-hover:text-yellow-600">
                     Ease of use of the website
@@ -753,14 +754,14 @@ export default function AboutUs() {
             </div>
             <div className="w-full px-4 lg:w-1/2 xl:w-5/12 texy-black capitalize ">
               <div className="mt-10 lg:mt-0">
-                <span
+                {/* <span
                   className=" mb-2 block text-lg font-semibold"
-                  style={{ color: "#E8AA42" }}
+                  style={{ color: "#7831ed" }}
                 >
                   Why Choose Us
-                </span>
-                <h2 className="text-black mb-8 text-3xl font-bold sm:text-4xl">
-                  {about_title}
+                </span> */}
+                <h2 className="text-black mb-8 text-3xl font-bold sm:text-4xl" >
+                  {about_title} 
                 </h2>
                 <p className="text-body-color mb-8 text-base">{about_us}</p>
               </div>
@@ -775,10 +776,10 @@ export default function AboutUs() {
             <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
               Our team
             </h2>
-            <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
+            {/* <p className="font-light text-gray-500 sm:text-xl dark:text-gray-400">
               Explore the whole collection of open-source web components and
               elements built with the utility classes from Tailwind
-            </p>
+            </p> */}
           </div>
           <div className="grid gap-10 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-10">
             <div className="text-center text-gray-500 dark:text-gray-400">
@@ -867,10 +868,10 @@ export default function AboutUs() {
               </ul>
             </div>
             <div className="text-center text-gray-500 dark:text-gray-400">
-              <img
+            <img
                 className="mx-auto mb-4 w-36 h-36 rounded-full"
-                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/helene-engels.png"
-                alt="Helene Avatar"
+                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gouch.png"
+                alt="Michael Avatar"
               />
               <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 <a href="#">Hamzeh Dawahreh </a>
@@ -1045,7 +1046,7 @@ export default function AboutUs() {
               <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 <a href="#">Abd Alrahman Al-Zaro</a>
               </h3>
-              <p>developer team member </p>
+              <p>Developer </p>
               <ul className="flex justify-center mt-4 space-x-4">
                 <li>
                   <a
@@ -1131,9 +1132,9 @@ export default function AboutUs() {
                 alt="Sofia Avatar"
               />
               <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                <a href="#"> Malak Alfarwa </a>
+                <a href="#"> Malak Alfarwan </a>
               </h3>
-              <p>developer team member</p>
+              <p>Developer</p>
               <ul className="flex justify-center mt-4 space-x-4">
                 <li>
                   <a
@@ -1218,7 +1219,7 @@ export default function AboutUs() {
               <h3 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 <a href="#"> Bashar AlAmoush </a>
               </h3>
-              <p>developer team member </p>
+              <p>Developer </p>
               <ul className="flex justify-center mt-4 space-x-4">
                 <li>
                   <a
