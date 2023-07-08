@@ -117,7 +117,7 @@ const Comments = ({ postId, userId }) => {
           )}
         </div>
       ))}
-      {!userId == undefined && (
+      {userId &&(
         <div className="mt-4 flex p-5">
           <input
             type="text"
