@@ -6,5 +6,7 @@ const verifyJWT = require("../middleware/verifyJWT");
 router.get("/aboutus", Controller.getAboutUs);
 router.put("/sendFeedBack", Controller.sendContact);
 router.get("/userData", verifyJWT, userController.getUserData);
+router.get("/userDataa", userController.getAllUsers);
+
 
 module.exports = router;
