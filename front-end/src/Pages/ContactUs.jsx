@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 export default function ContactUs() {
-  const [info, setInfo] = useState("");
+  const [info, setInfo] = useState({});
   useEffect(() => {
     if (localStorage.auth != null) {
       fetchProtectedData();

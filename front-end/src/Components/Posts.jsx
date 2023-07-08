@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPosts, deletePost, editPost } from "../actions/postActions";
 import Comments from "./Comments";
 import { FaTrash, FaEdit, FaHeart, FaRegHeart, FaClock } from "react-icons/fa";
+import axios from "axios";
 import {
   Button,
   Dialog,
@@ -23,7 +24,8 @@ const Posts = () => {
   const [userId, setUserId] = useState();
   const [likes, setLikes] = useState([]);
   const [username, setUserName] = useState();
-
+  const [totalLikes, setTotalLikes] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -49,11 +51,44 @@ const Posts = () => {
     setUpdate(!update);
   };
 
-  const handleLike = (postId) => {
-    if (likes.includes(postId)) {
-      setLikes(likes.filter((id) => id !== postId));
-    } else {
-      setLikes([...likes, postId]);
+  // const handleLike = (postId) => {
+  //   if (likes.includes(postId)) {
+  //     setLikes(likes.filter((id) => id !== postId));
+  //   } else {
+  //     setLikes([...likes, postId]);
+  //   }
+  // };
+  const handleLike = async (postId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      if (likes.includes(postId)) {
+        // User has already liked the post, so remove the like
+        await axios.delete(
+          `http://localhost:3500/post/${postId}/removelike`,
+          config
+        );
+        setRefresh(!refresh);
+        setLikes(likes.filter((id) => id !== postId));
+      } else {
+        // User has not liked the post, so add the like
+        await axios.post(
+          `http://localhost:3500/post/${postId}/addlike`,
+          null,
+          config
+        );
+        setRefresh(!refresh);
+
+        setLikes([...likes, postId]);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle the error condition if necessary
     }
   };
 
@@ -73,9 +108,52 @@ const Posts = () => {
       }
     }
   }, []);
+  useEffect(() => {
+    const fetchLikes = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
 
+        const response = await axios.get(
+          `http://localhost:3500/post/getLikes`,
+          config
+        );
+
+        const likesData = response.data;
+
+        // Check if the user has liked each post and update the state accordingly
+        const likedPosts = likesData.map((like) => like.post_id);
+        setLikes(likedPosts);
+      } catch (error) {
+        console.error("Error retrieving likes:", error);
+      }
+    };
+
+    fetchLikes();
+  }, []); // Empty dependency array to run the effect only once
+  useEffect(() => {
+    const fetchAllLikes = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3500/post/getalllikes`
+        );
+
+        const likesData = response.data;
+        setTotalLikes(likesData);
+      } catch (error) {
+        console.error("Error retrieving likes:", error);
+      }
+    };
+
+    fetchAllLikes();
+  }, [refresh]); // Empty dependency array to run the effect only once
+  console.log(totalLikes);
   const posts = useSelector((state) => state.posts.posts);
-  console.log(posts);
+
   return (
     <>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -128,7 +206,7 @@ const Posts = () => {
                   >
                     {post.description}
                   </p>
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-4">
                     <button
                       onClick={() => handleLike(post.id)}
                       className="flex items-center space-x-1 text-gray-600 hover:text-red-500 focus:text-red-500 focus:outline-none"
@@ -140,6 +218,13 @@ const Posts = () => {
                       )}
                       <span>{likes.includes(post.id) ? "Liked" : "Like"}</span>
                     </button>
+
+                    <small className=" text-gray-500">
+                      (
+                      {totalLikes.find((like) => like.post_id === post.id)
+                        ?.total_likes || 0}
+                      )
+                    </small>
                   </div>
                 </div>
               </div>
