@@ -23,7 +23,9 @@ const addNewPost = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
   try {
-    const query = "SELECT * FROM post";
+    const query =
+      "SELECT post.*, users.user_name AS username FROM public.post JOIN public.users ON post.user_id = users.id; ";
+
     const result = await pool.query(query);
     const allPosts = result.rows;
     res.status(200).json(allPosts);
@@ -107,7 +109,9 @@ const addNewComment = async (req, res) => {
 
 const getAllComments = async (req, res) => {
   try {
-    const query = "SELECT * FROM comments";
+    const query =
+      "SELECT c.id, c.post_id, c.user_id, c.comment, c.timestamp, u.user_name FROM public.comments c JOIN public.users u ON c.user_id = u.id;";
+
     const result = await pool.query(query);
     const allComments = result.rows;
     res.status(200).json(allComments);
@@ -116,7 +120,6 @@ const getAllComments = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 const deleteComment = async (req, res) => {
   const postId = req.params.postId;
   const commentId = req.params.commentId;
@@ -177,6 +180,70 @@ const getUserPosts = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+const addLike = async (req, res) => {
+  const postId = req.params.postId;
+  const userId = req.user_id;
+
+  try {
+    // Check if the user has already liked the post
+    const likeQuery = "SELECT * FROM likes WHERE post_id = $1 AND user_id = $2";
+    const likeResult = await pool.query(likeQuery, [postId, userId]);
+    const alreadyLiked = likeResult.rows.length > 0;
+
+    if (alreadyLiked) {
+      // User has already liked the post, so remove the like
+      const deleteLikeQuery =
+        "DELETE FROM likes WHERE post_id = $1 AND user_id = $2";
+      await pool.query(deleteLikeQuery, [postId, userId]);
+
+      // Decrement the total_likes count in the likes table
+      const decrementLikesQuery =
+        "UPDATE likes SET total_likes = total_likes - 1 WHERE post_id = $1";
+      await pool.query(decrementLikesQuery, [postId]);
+    } else {
+      // User has not liked the post, so add the like
+      const insertLikeQuery =
+        'INSERT INTO likes (user_id, post_id, "like", total_likes) VALUES ($1, $2, true, 1)';
+      await pool.query(insertLikeQuery, [userId, postId]);
+
+      // Increment the total_likes count in the likes table
+      // const incrementLikesQuery =
+      //   "UPDATE likes SET total_likes = total_likes + 1 WHERE post_id = $1";
+      // await pool.query(incrementLikesQuery, [postId]);
+    }
+
+    res.status(200).json({ message: "Like updated successfully" });
+  } catch (error) {
+    console.error("Error updating like:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+const getLikesByUserAndPost = async (req, res) => {
+  const userId = req.user_id;
+
+  try {
+    const likeQuery = "SELECT * FROM likes WHERE user_id = $1";
+    const likeResult = await pool.query(likeQuery, [userId]);
+    const likes = likeResult.rows;
+
+    res.status(200).json(likes);
+  } catch (error) {
+    console.error("Error retrieving likes:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+const getAllLikes = async (req, res) => {
+  try {
+    const likeQuery = "SELECT * FROM likes";
+    const likeResult = await pool.query(likeQuery);
+    const likes = likeResult.rows;
+
+    res.status(200).json(likes);
+  } catch (error) {
+    console.error("Error retrieving likes:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 module.exports = {
   addNewPost,
   getAllPosts,
@@ -187,4 +254,7 @@ module.exports = {
   deleteComment,
   editComment,
   getUserPosts,
+  addLike,
+  getLikesByUserAndPost,
+  getAllLikes,
 };

@@ -24,4 +24,8 @@ router.put(
   postsController.editComment
 );
 router.get("/getUserPosts", verifyJWT, postsController.getUserPosts);
+router.post("/:postId/addlike", verifyJWT, postsController.addLike);
+router.delete("/:postId/removelike", verifyJWT, postsController.addLike);
+router.get("/getLikes", verifyJWT, postsController.getLikesByUserAndPost);
+router.get("/getAllLikes", postsController.getAllLikes);
 module.exports = router;

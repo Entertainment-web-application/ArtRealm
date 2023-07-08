@@ -140,3 +140,15 @@ TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.users_feedback
     OWNER to postgres;
+
+
+
+    -- Likes table
+    CREATE TABLE IF NOT EXISTS likes
+(
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id),
+    post_id INTEGER REFERENCES post(id),
+    "like" BOOLEAN DEFAULT false,
+    total_likes INTEGER DEFAULT 0
+);
