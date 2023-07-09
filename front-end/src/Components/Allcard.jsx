@@ -6,11 +6,10 @@ import {
   CardHeader,
   CardBody,
   Typography,
-  IconButton,
+  
 } from "@material-tailwind/react";
 import {
-  StarIcon,
-  HeartIcon,
+  StarIcon
 } from "@heroicons/react/24/solid";
 
 export default function Allcard() {
@@ -132,14 +131,7 @@ export default function Allcard() {
                     style={{ height: '250px' }}
                   />
                   <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
-                  <IconButton
-                    size="sm"
-                    color="red"
-                    variant="text"
-                    className="!absolute top-4 right-4 rounded-full"
-                  >
-                    <HeartIcon className="h-6 w-6" />
-                  </IconButton>
+            
                 </CardHeader>
                 <CardBody>
                   <div className="mb-3 flex items-center justify-between">

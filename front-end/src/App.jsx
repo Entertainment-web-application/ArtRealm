@@ -1,6 +1,4 @@
 import HomePage from "./Pages/HomePage";
-import Navbar from "./Components/Navbar";
-import Footer from "./Components/Footer";
 import NotFound from "./Pages/404";
 import AboutUs from "./Pages/AboutUs";
 import ContactUs from "./Pages/ContactUs";
@@ -32,7 +30,7 @@ function App() {
       <BrowserRouter>
         {/* <ScrollToTop /> */}
 
-        <Navbar />
+       
         <UpdateContext.Provider
           value={{ update, setUpdate, deleted, setDeleted }}
         >
@@ -47,7 +45,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </UpdateContext.Provider>
-        <Footer />
+    
       </BrowserRouter>
     </>
   );

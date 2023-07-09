@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import Navbar from "../Components/Navbar";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import EditButton from "../Components/EditButton";
@@ -75,6 +76,7 @@ export default function ProfilePage() {
 
   return (
     <>
+    <Navbar />
       <div id="edit-portal"></div>
       <div className="h-screen bg-gray-200">
         <div className="flex flex-col md:flex-row">

@@ -3,6 +3,9 @@ import { HashLink } from 'react-router-hash-link';
 import Ratedsection from '../Components/Ratedsection';
 import Allcard from '../Components/Allcard';
 import Stats from '../Components/stats';
+import Footer from '../Components/Footer';
+import Navbar from "../Components/Navbar";
+
 import Seactionmore from '../Components/Seactionmore';
 
 import video from '../video/pexels-taryn-elliott-6214489 (2160p).mp4';
@@ -10,6 +13,7 @@ import video from '../video/pexels-taryn-elliott-6214489 (2160p).mp4';
 export default function Home() {
   return (
     <>
+    <Navbar />
       <section className="relative flex flex-col items-center justify-end text-center text-white" style={{ height: '700px' }}>
         <div className="video-docker absolute top-0 left-0 w-full h-full overflow-hidden">
           <video
@@ -44,6 +48,8 @@ export default function Home() {
       <Seactionmore/>
       <Allcard />
       <Stats />
+      <Footer />
+
     </>
   );
 }
