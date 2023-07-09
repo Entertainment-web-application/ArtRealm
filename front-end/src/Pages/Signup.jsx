@@ -83,7 +83,7 @@ export default function SignUp() {
         errors.password =
           "Password must include at least one special character";
       }
-      if (values.password.length < 9) {
+      if (values.password.length < 8) {
         errors.password = "Password must be at least 9 characters long";
       }
     }
