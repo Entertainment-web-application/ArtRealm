@@ -168,13 +168,10 @@ const getUserPosts = async (req, res) => {
     const values = [userId];
     const result = await pool.query(query, values);
 
-    if (result.rows.length > 0) {
+ 
       // User posts found
       res.status(200).json(result.rows);
-    } else {
-      // User has no posts
-      res.status(404).json({ error: "User has no posts" });
-    }
+    
   } catch (error) {
     // Error occurred while querying the database
     res.status(500).json({ error: "Internal server error" });

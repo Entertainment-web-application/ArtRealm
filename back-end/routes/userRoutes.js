@@ -5,5 +5,6 @@ const validInfo = require("../utils/UservalidInfo");
 
 router.post("/signup", validInfo, userController.signup);
 router.post("/login", validInfo, userController.login);
+router.put("/users/:id",  userController.editUser);
 
 module.exports = router;

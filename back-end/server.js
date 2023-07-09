@@ -2,7 +2,7 @@ require("dotenv").config();
 const userRoutes = require("./routes/userRoutes");
 const PaintingsRoutes = require("./routes/paintingsRoutes");
 const adminRoutes = require("./routes/adminRoutes"); // --FA
-
+const editUser = require("./routes/userRoutes")
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -25,5 +25,6 @@ app.use("/users", userRoutes);
 app.use("/Paintings", PaintingsRoutes);
 app.use("/api", require("./routes/others"));
 app.use("/admin", adminRoutes);
+app.use(editUser)
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
