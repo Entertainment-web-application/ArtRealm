@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 export default function ContactUs() {
 
   const [info, setInfo] = useState();
@@ -54,6 +56,7 @@ export default function ContactUs() {
 
   return (
     <>
+    <Navbar />
       <div>
         <div
           className="bg-cover bg-center h-screen"
@@ -1034,6 +1037,7 @@ export default function ContactUs() {
           </section>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

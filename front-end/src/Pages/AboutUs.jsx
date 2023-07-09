@@ -5,6 +5,8 @@ import axios from "axios";
 import { mdiHandCoin } from "@mdi/js";
 import Icon from "@mdi/react";
 import { mdiGift } from "@mdi/js";
+import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 import { mdiIncognito } from "@mdi/js";
 import { mdiPail } from "@mdi/js";
 
@@ -29,6 +31,7 @@ export default function AboutUs() {
 
   return (
     <>
+    <Navbar />
       <div
         className="bg-cover bg-center h-screen"
         style={{
@@ -1298,6 +1301,7 @@ export default function AboutUs() {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }
