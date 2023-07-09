@@ -3,13 +3,12 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-
 const EditButton = ({ onEdit }) => {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [userId, setUserId] = useState(null);
-  
+
   const [userData, setUserData] = useState(null);
 
   const handleEditClick = () => {
@@ -38,7 +37,7 @@ const EditButton = ({ onEdit }) => {
           const response = await axios.get(
             `http://localhost:3500/api/users/${userId}`
           );
-          
+
           setUserData(response.data[0]);
           setName(response.data[0].firstName);
           setEmail(response.data[0].email);
@@ -46,17 +45,10 @@ const EditButton = ({ onEdit }) => {
           console.error("Error retrieving data:", error);
         }
       }
-
-
-     
-
-
-   
     } catch (error) {
       console.error(error);
-      
+
       localStorage.removeItem("auth");
-      window.location.href = "http://localhost:3000/Login";
     }
   };
 
@@ -66,8 +58,6 @@ const EditButton = ({ onEdit }) => {
     }
   }, []);
 
-
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -75,12 +65,10 @@ const EditButton = ({ onEdit }) => {
       const decodedToken = jwtDecode(token);
       if (decodedToken) {
         setUserId(decodedToken.user_id);
-        console.log(userId)
-      
+        console.log(userId);
       }
     }
   }, []);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,8 +80,6 @@ const EditButton = ({ onEdit }) => {
       })
       .then(function (response) {
         console.log(response);
-        
-        window.location.href = "http://localhost:3000/ProfilePage";
       })
       .catch(function (error) {
         console.log(error);
@@ -143,6 +129,7 @@ const EditButton = ({ onEdit }) => {
               <button
                 type="submit"
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                style={{ backgroundColor: "#7831ed" }}
               >
                 Update
               </button>
@@ -157,7 +144,8 @@ const EditButton = ({ onEdit }) => {
   return (
     <button
       onClick={handleEditClick}
-      className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+      className="px-4 py-2 bg-blue-500 text-white rounded-md "
+      style={{ backgroundColor: "#7831ed", width: "4.5rem" }}
     >
       Edit
     </button>

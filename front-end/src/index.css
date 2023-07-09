@@ -1,3 +1,4 @@
+@import '@tailwindcss/scrollbar';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

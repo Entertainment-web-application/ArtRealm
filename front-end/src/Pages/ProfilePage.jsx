@@ -60,6 +60,19 @@ export default function ProfilePage() {
     fetchData();
     fetchPosts();
   }, []);
+
+  function breakText(text, breakAfter) {
+    if (text.length <= breakAfter) {
+      return text;
+    }
+
+    let brokenText = "";
+    for (let i = 0; i < text.length; i += breakAfter) {
+      brokenText += text.substr(i, breakAfter) + " ";
+    }
+    return brokenText;
+  }
+
   return (
     <>
       <div id="edit-portal"></div>
@@ -132,12 +145,39 @@ export default function ProfilePage() {
                     userAllPosts.map((post, index) => (
                       <div className="mt-2 text-gray-700" key={index}>
                         <div className="justify-between rounded-lg bg-white p-6 shadow-md sm:flex">
-                          <div>
+                          <div
+                            className="max-h-20 overflow-y-auto"
+                            style={{
+                              maxHeight: "20rem",
+                              scrollbarWidth: "thin",
+                            }}
+                          >
+                            <style>
+                              {`
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #a0aec0;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #718096;
+    }
+    `}
+                            </style>
                             <p className="font-bold">{post.title}</p>
-                            <p className="mt-2 text-gray-600 text-sm">
-                              {post.description}
+                            <p className="mt-2 text-gray-600 text-sm overflow-wrap break-word whitespace-pre-wrap">
+                              <span className="break-words">
+                                {breakText(post.description, 20)}
+                              </span>
                             </p>
                           </div>
+
                           <div className="mt-4 sm:mt-0 sm:ml-4">
                             <p className="font-bold text-gray-600">
                               Likes: {post.likes}

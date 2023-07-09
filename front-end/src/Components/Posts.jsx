@@ -61,13 +61,6 @@ const Posts = () => {
     setUpdate(!update);
   };
 
-  // const handleLike = (postId) => {
-  //   if (likes.includes(postId)) {
-  //     setLikes(likes.filter((id) => id !== postId));
-  //   } else {
-  //     setLikes([...likes, postId]);
-  //   }
-  // };
   const handleLike = async (postId, userId) => {
     try {
       const token = localStorage.getItem("token");
@@ -192,16 +185,10 @@ const Posts = () => {
                   <span>{formatDate(post.timestamp)}</span>
                 </div>
                 <div className="p-4">
-                  <h5
-                    className="text-xl font-bold text-gray-900 mb-2"
-                    style={{ overflowWrap: "break-word", maxHeight: "none" }}
-                  >
+                  <h5 className="text-xl font-bold text-gray-900 mb-2">
                     {post.title}
                   </h5>
-                  <p
-                    className="text-base text-gray-700 leading-snug mb-4 "
-                    style={{ overflowWrap: "break-word", maxHeight: "none" }}
-                  >
+                  <p className="text-base text-gray-700 leading-snug mb-4">
                     {post.description}
                   </p>
                   <div className="flex items-center gap-4">
@@ -217,7 +204,7 @@ const Posts = () => {
                       <span>{likes.includes(post.id) ? "Liked" : "Like"}</span>
                     </button>
 
-                    <small className=" text-gray-500">
+                    <small className="text-gray-500">
                       (
                       {totalLikes.find((like) => like.post_id === post.id)
                         ?.total_likes || 0}
@@ -226,51 +213,32 @@ const Posts = () => {
                   </div>
                 </div>
               </div>
-              <Dialog
-                open={open && editedPostId === post.id}
-                handler={() => setOpen(false)}
-              >
-                <DialogHeader>Edit your post</DialogHeader>
-                <DialogBody divider>
-                  <label htmlFor="title" className="text-gray-800">
-                    Title
-                  </label>
-                  <input
-                    name="title"
-                    onChange={handleChange}
-                    type="text"
-                    className="w-full bg-gray-100 border border-gray-300 rounded-lg p-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <label htmlFor="description" className="text-gray-800">
-                    Description
-                  </label>
-                  <input
-                    name="description"
-                    onChange={handleChange}
-                    type="text"
-                    className="w-full bg-gray-100 border border-gray-300 rounded-lg p-2 mb-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </DialogBody>
-                <DialogFooter>
-                  <Button
-                    variant="text"
-                    color="red"
-                    onClick={() => setOpen(false)}
-                    className="mr-1"
-                  >
-                    <span>Cancel</span>
-                  </Button>
-                  <Button
-                    variant="gradient"
-                    color="green"
-                    onClick={() => handleEdit(post.id)}
-                  >
-                    <span>Confirm</span>
-                  </Button>
-                </DialogFooter>
-              </Dialog>
+              <hr className="border-gray-300 my-4" />
+              <style>
+                {`
+    .scrollbar-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    .scrollbar-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 8px;
+    }
+    .scrollbar-container::-webkit-scrollbar-thumb {
+      background: #a0aec0;
+      border-radius: 8px;
+    }
+    .scrollbar-container::-webkit-scrollbar-thumb:hover {
+      background: #718096;
+    }
+  `}
+              </style>
 
-              <Comments postId={post.id} userId={userId} />
+              <div
+                className="max-h-20 overflow-y-auto scrollbar-container"
+                style={{ maxHeight: "20rem", scrollbarWidth: "thin" }}
+              >
+                <Comments postId={post.id} userId={userId} />
+              </div>
             </div>
           </div>
         ))}
@@ -280,3 +248,8 @@ const Posts = () => {
 };
 
 export default Posts;
+
+
+
+
+

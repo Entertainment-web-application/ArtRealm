@@ -1,4 +1,4 @@
-import logo from "../images/logo.png";
+import logo from "../images/artrealm-high-resolution-color-logo-removebg-preview.png";
 import { Link } from "react-router-dom";
 export default function Footer() {
   return (

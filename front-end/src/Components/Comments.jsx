@@ -132,6 +132,7 @@ const Comments = ({ postId, userId }) => {
           <button
             onClick={handleAddComment}
             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:bg-green-600 focus:outline-none"
+            style={{ backgroundColor: "#7831ed" }}
           >
             Add Comment
           </button>

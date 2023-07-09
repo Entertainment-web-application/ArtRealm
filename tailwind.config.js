@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+
+  ],
 };
 const withMT = require("@material-tailwind/react/utils/withMT");
 
