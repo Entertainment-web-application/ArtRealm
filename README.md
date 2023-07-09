@@ -15,7 +15,6 @@ It features diverse artworks, artist profiles, exhibitions, and a vibrant commun
 
 ### The Technologies that we used:
 
-
 - Figma
 - Trello
 - React - Tailwind
