@@ -3,12 +3,14 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 
+
 const EditButton = ({ onEdit }) => {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [userId, setUserId] = useState(null);
   
+  const [userData, setUserData] = useState(null);
 
   const handleEditClick = () => {
     setShowForm(true);
@@ -30,11 +32,14 @@ const EditButton = ({ onEdit }) => {
           },
         });
 
+        setUserId(response.data.user.id);
+        let id = response.data.user.id;
         try {
           const response = await axios.get(
             `http://localhost:3500/api/users/${userId}`
           );
           
+          setUserData(response.data[0]);
           setName(response.data[0].firstName);
           setEmail(response.data[0].email);
         } catch (error) {
@@ -50,6 +55,8 @@ const EditButton = ({ onEdit }) => {
     } catch (error) {
       console.error(error);
       
+      localStorage.removeItem("auth");
+      window.location.href = "http://localhost:3000/Login";
     }
   };
 
@@ -86,6 +93,7 @@ const EditButton = ({ onEdit }) => {
       .then(function (response) {
         console.log(response);
         
+        window.location.href = "http://localhost:3000/ProfilePage";
       })
       .catch(function (error) {
         console.log(error);

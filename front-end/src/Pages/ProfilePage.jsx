@@ -7,7 +7,16 @@ export default function ProfilePage() {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [userAllPosts, setuserAllPosts] = useState([]);
- 
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
 
   const fetchData = async () => {
     try {

@@ -29,7 +29,17 @@ const Posts = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Decode the token to extract user information
+      const decodedToken = jwtDecode(token);
+      if (decodedToken) {
+        setUserId(decodedToken.user_id);
+        setUserName(decodedToken.user_name);
+      }
+    }
+  }, []);
   const handleOpen = (postId) => {
     setFormData(posts.find((post) => post.id === postId)); // Set the form data to the current post being edited
     setEditedPostId(postId);
@@ -58,7 +68,7 @@ const Posts = () => {
   //     setLikes([...likes, postId]);
   //   }
   // };
-  const handleLike = async (postId) => {
+  const handleLike = async (postId, userId) => {
     try {
       const token = localStorage.getItem("token");
       const config = {
@@ -97,17 +107,6 @@ const Posts = () => {
     return `${year}-${month}-${day}`;
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // Decode the token to extract user information
-      const decodedToken = jwtDecode(token);
-      if (decodedToken) {
-        setUserId(decodedToken.user_id);
-        setUserName(decodedToken.user_name);
-      }
-    }
-  }, []);
   useEffect(() => {
     const fetchLikes = async () => {
       try {
@@ -151,7 +150,6 @@ const Posts = () => {
 
     fetchAllLikes();
   }, [refresh]); // Empty dependency array to run the effect only once
-  console.log(totalLikes);
   const posts = useSelector((state) => state.posts.posts);
 
   return (

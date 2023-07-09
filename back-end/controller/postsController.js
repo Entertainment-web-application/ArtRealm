@@ -180,7 +180,6 @@ const getUserPosts = async (req, res) => {
 const addLike = async (req, res) => {
   const postId = req.params.postId;
   const userId = req.user_id;
-
   try {
     // Check if the user has already liked the post
     const likeQuery = "SELECT * FROM likes WHERE post_id = $1 AND user_id = $2";
@@ -193,20 +192,19 @@ const addLike = async (req, res) => {
         "DELETE FROM likes WHERE post_id = $1 AND user_id = $2";
       await pool.query(deleteLikeQuery, [postId, userId]);
 
-      // Decrement the total_likes count in the likes table
       const decrementLikesQuery =
         "UPDATE likes SET total_likes = total_likes - 1 WHERE post_id = $1";
       await pool.query(decrementLikesQuery, [postId]);
     } else {
       // User has not liked the post, so add the like
       const insertLikeQuery =
-        'INSERT INTO likes (user_id, post_id, "like", total_likes) VALUES ($1, $2, true, 1)';
+        'INSERT INTO likes (user_id, post_id, "like", total_likes) VALUES ($1, $2, true, 0)';
       await pool.query(insertLikeQuery, [userId, postId]);
 
       // Increment the total_likes count in the likes table
-      // const incrementLikesQuery =
-      //   "UPDATE likes SET total_likes = total_likes + 1 WHERE post_id = $1";
-      // await pool.query(incrementLikesQuery, [postId]);
+      const incrementLikesQuery =
+        "UPDATE likes SET total_likes = total_likes + 1 WHERE post_id = $1";
+      await pool.query(incrementLikesQuery, [postId]);
     }
 
     res.status(200).json({ message: "Like updated successfully" });
