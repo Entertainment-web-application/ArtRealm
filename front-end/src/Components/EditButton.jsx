@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
+
 
 const EditButton = ({ onEdit }) => {
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [userId, setUserId] = useState(null);
+  
   const [userData, setUserData] = useState(null);
 
   const handleEditClick = () => {
@@ -28,12 +31,14 @@ const EditButton = ({ onEdit }) => {
             Authorization: token,
           },
         });
+
         setUserId(response.data.user.id);
         let id = response.data.user.id;
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/users/${id}`
+            `http://localhost:3500/api/users/${userId}`
           );
+          
           setUserData(response.data[0]);
           setName(response.data[0].firstName);
           setEmail(response.data[0].email);
@@ -41,8 +46,15 @@ const EditButton = ({ onEdit }) => {
           console.error("Error retrieving data:", error);
         }
       }
+
+
+     
+
+
+   
     } catch (error) {
       console.error(error);
+      
       localStorage.removeItem("auth");
       window.location.href = "http://localhost:3000/Login";
     }
@@ -54,16 +66,33 @@ const EditButton = ({ onEdit }) => {
     }
   }, []);
 
+
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // Decode the token to extract user information
+      const decodedToken = jwtDecode(token);
+      if (decodedToken) {
+        setUserId(decodedToken.user_id);
+        console.log(userId)
+      
+      }
+    }
+  }, []);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(name, email, userId);
     axios
-      .put(`http://localhost:5000/api/users/${userId}`, {
-        firstName: name,
-        email: email,
+      .put(`http://localhost:3500/users/${userId}`, {
+        user_name: name,
+        user_email: email,
       })
       .then(function (response) {
         console.log(response);
+        
         window.location.href = "http://localhost:3000/ProfilePage";
       })
       .catch(function (error) {

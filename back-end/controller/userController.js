@@ -85,8 +85,10 @@ const getUserData = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 const getAllUsers = async (req, res) => {
   try {
+    
     const client = await pool.connect();
     const query = "SELECT * FROM users";
   
@@ -108,9 +110,30 @@ const getAllUsers = async (req, res) => {
 };
 
 
+
+const editUser = async (req, res) => {
+  const userId = req.params.id;
+  const { user_name, user_email } = req.body;
+
+  try {
+    // Update the user's name and email in the database
+    
+    const query = 'UPDATE public.users SET user_name = $1, user_email = $2 WHERE id = $3';
+    await pool.query(query, [user_name, user_email, userId]);
+
+    res.status(200).json({ message: 'User details updated successfully' });
+  } catch (err) {
+    console.error('Error updating user details:', err);
+    res.status(500).json({ error: 'An error occurred while updating user details' });
+  }
+};
+
+
+
 module.exports = {
   login,
   signup,
   getUserData,
   getAllUsers,
+  editUser,
 };
